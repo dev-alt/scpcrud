@@ -63,7 +63,8 @@ function Home() {
   return (
     <Box>
       <Box sx={{ mt: 0, textAlign: 'center', color: 'error.main' }}>
-        <h1>SCP Foundation</h1>
+      <Typography variant='h6' sx={{ textAlign: 'center', color: 'red' }}>SCP Foundation</Typography>  
+
       </Box>
       <Box sx={{ margin: 5 }}>
         {currentItems.map((item) => (

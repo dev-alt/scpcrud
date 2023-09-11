@@ -17,9 +17,6 @@ function Header() {
             <Button component={Link} to="/create" color="inherit">
               Add Entry
             </Button>
-            <Button component={Link} to="/items" color="inherit">
-              Items
-            </Button>
             <Button component={Link} to="/catalog" color="inherit">
               Catalog
             </Button>

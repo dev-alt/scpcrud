@@ -26,7 +26,7 @@ function Catalog() {
   return (
     <Box>
       <Box sx={{ mt: 0, textAlign: 'center', color: 'error.main' }}>
-        <h1>Catalog Data</h1>
+      <Typography variant='h6' sx={{ textAlign: 'center', color: 'red' }}>Catalog Data</Typography>  
       </Box>
       <Box sx={{ margin: 5 }}>
         {data.map((item) => (

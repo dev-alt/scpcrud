@@ -10,6 +10,7 @@ import {
     FormControlLabel,
     Checkbox,
     FormGroup,
+    Typography
 } from '@mui/material';
 import { db } from '../../utils/DbConfig';
 import { collection, addDoc } from 'firebase/firestore';
@@ -100,7 +101,8 @@ function CreateEntry() {
     return (
         <Box>
             <Box sx={{ mt: 0, textAlign: 'center', color: 'error.main' }}>
-                <h1>Create Entry</h1>
+            <Typography variant='h6' sx={{ textAlign: 'center', color: 'red' }}>Create Entry</Typography>
+
             </Box>
             <form onSubmit={handleCreateEntry}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5, margin: 5 }}>
