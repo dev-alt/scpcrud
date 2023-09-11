@@ -143,13 +143,6 @@ function CreateEntry() {
                         </Select>
                     </FormControl>
                     <TextField
-                        name="description"
-                        label="Description"
-                        variant="outlined"
-                        value={entryDescription}
-                        onChange={(event) => setEntryDescription(event.target.value)}
-                    />
-                    <TextField
                         name="containment"
                         label="Containment"
                         variant="outlined"
@@ -157,6 +150,13 @@ function CreateEntry() {
                         rows={4}
                         value={entryContainment}
                         onChange={(event) => setEntryContainment(event.target.value)}
+                    />
+                                        <TextField
+                        name="description"
+                        label="Description"
+                        variant="outlined"
+                        value={entryDescription}
+                        onChange={(event) => setEntryDescription(event.target.value)}
                     />
                     <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
                         <FormControlLabel
