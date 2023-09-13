@@ -13,16 +13,14 @@ function Detail() {
         const fetchData = async () => {
             const OurCollection = collection(db, 'data');
             const itemRef = doc(OurCollection, itemId);
-            const itemSnapshot = await getDoc(itemRef);
+            const ourDocsToRead = await getDoc(itemRef);
 
-            if (itemSnapshot.exists()) {
-                setScpDetails({ id: itemSnapshot.id, ...itemSnapshot.data() });
+            if (ourDocsToRead.exists()) {
+                setScpDetails({ id: ourDocsToRead.id, ...ourDocsToRead.data() });
             } else {
-                // Handle item not found
                 setScpDetails(null);
             }
         };
-
         fetchData();
     }, [itemId]);
 
@@ -31,7 +29,6 @@ function Detail() {
             <Typography variant='h6' sx={{ textAlign: 'center', color: 'red' }}>SCP Entry Details</Typography>
             <Paper elevation={3} sx={{ p: 3, m: 3 }}>
                 <Box sx={{ mt: 0, textAlign: 'center', color: 'error.main' }}>
-
 
                 </Box>
                 {scpDetails ? (

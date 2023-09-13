@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { db } from '../../utils/DbConfig';
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -18,10 +18,10 @@ function Update() {
             if (itemId) {
                 const OurCollection = collection(db, 'data');
                 const itemRef = doc(OurCollection, itemId);
-                const itemSnapshot = await getDoc(itemRef);
+                const ourDocsToRead = await getDoc(itemRef);
 
-                if (itemSnapshot.exists()) {
-                    const itemData = itemSnapshot.data();
+                if (ourDocsToRead.exists()) {
+                    const itemData = ourDocsToRead.data();
                     setDataNumber(itemData.Number);
                     setDataName(itemData.Name);
                     setDataDescription(itemData.Description);
@@ -67,7 +67,8 @@ function Update() {
     return (
         <Box>
             <Box sx={{ mt: 0, textAlign: 'center', color: 'error.main' }}>
-                <h1>Update Entry</h1>
+            <Typography variant='h6' sx={{ textAlign: 'center', color: 'red' }}>Catalog Data</Typography>  
+
             </Box>
             <form onSubmit={crudUpdate}>
                 <TextField
