@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import { db } from '../utils/DbConfig';
 import { collection, getDocs } from 'firebase/firestore';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 
 
 function Catalog() {
