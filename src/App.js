@@ -11,9 +11,7 @@ import Home from './pages/Home';
 function App() {
   return (
     <Router>
-
       <Header />
-
       <List />
       <Routes>
         <Route exact path="/" element={<Home />} />

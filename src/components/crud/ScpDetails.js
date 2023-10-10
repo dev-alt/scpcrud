@@ -4,7 +4,7 @@ import { Box, Typography, Button, Paper } from '@mui/material';
 import { db } from '../../utils/DbConfig';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 function Detail() {
     const { itemId } = useParams();
     const [scpDetails, setScpDetails] = useState(null);
@@ -53,8 +53,8 @@ function Detail() {
                             color="error"
                             component={Link}
                             to={`/delete/${scpDetails.id}`}
-                        >
-                            Delete
+                        >        <DeleteIcon /> Delete
+                          
                         </Button>
                     </div>
                 ) : (

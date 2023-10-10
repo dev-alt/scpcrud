@@ -13,7 +13,7 @@ function Update() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Load data for the specified item when itemId changes
+        // Load data when itemId changes
         const fetchData = async () => {
             if (itemId) {
                 const OurCollection = collection(db, 'data');
