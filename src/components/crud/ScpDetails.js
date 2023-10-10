@@ -35,7 +35,7 @@ function Detail() {
                 </Box>
                 
                 {scpDetails ? (
-                    <div>
+                    <Box>
                         <Typography variant="h5" sx={{ mb: 1 }}>{scpDetails.Number}</Typography>
                         <Typography variant="h2" sx={{ mb: 2 }}>{scpDetails.Name}</Typography>
                         <Typography variant="caption" sx={{ mb: 2 }}>{scpDetails.ObjectClass}</Typography>
@@ -65,7 +65,7 @@ function Detail() {
                           
                         </IconButton>
                         </Tooltip>
-                    </div>
+                    </Box>
                 ) : (
                     <p>SCP Entry not found.</p>
                 )}

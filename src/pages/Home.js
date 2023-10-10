@@ -1,42 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Typography, Button,CardActions,Paper, Tooltip, Zoom} from '@mui/material';
+import { Box, Typography, Button, Paper, Tooltip, Zoom } from '@mui/material';
 import { db } from '../utils/DbConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import '../utils/style.css'
 
-
 // Define the ContainmentText component outside of Home
 function ContainmentText({ text, maxChars }) {
   const [showFullText, setShowFullText] = useState(false);
   const truncatedText = showFullText ? text : text.slice(0, maxChars);
-  
 
   return (
-    <Typography>
-      {truncatedText}
-      {!showFullText && text.length > maxChars && (
-        <CardActions>
+    <Box>
+      <Typography>
+        {truncatedText}
+        {!showFullText && text.length > maxChars && (
           <Tooltip title="Read More">
-          <button
-          onClick={() => setShowFullText(true)}
-          style={{ cursor: 'pointer', border: 'none', background: 'none', padding: 0 }}
-        >
-          <ReadMoreIcon/ >
-        </button>
-        </Tooltip>
-          </CardActions>
-      )}
-      {showFullText && (
-        <CardActions>
+            <Button
+              onClick={() => setShowFullText(true)}
+              style={{ cursor: 'pointer', border: 'none', background: 'none', padding: 0 }}
+            >
+              <ReadMoreIcon />
+            </Button>
+          </Tooltip>
+        )}
+        {showFullText && (
           <Button onClick={() => setShowFullText(false)} style={{ cursor: 'pointer' }}>
-          Show Less
-        </Button>
-        </CardActions>
-        
-      )}
-    </Typography>
+            Show Less
+          </Button>
+        )}
+      </Typography>
+    </Box>
   );
 }
 
@@ -71,27 +66,38 @@ function Home() {
     setCurrentPage(newPage);
   };
 
-
-
   return (
-    
     <Box>
-      <Box sx={{ mt: 0, textAlign: 'center', color:"primary.dark"}}>
-      <Typography variant='h3' sx={{ textAlign: 'center'}}>SCP Foundation</Typography>  
-
+      <Box sx={{ mt: 0, textAlign: 'center', color: "primary.dark" }}>
+        <Typography variant='h3' sx={{ textAlign: 'center' }}>SCP Foundation</Typography>
       </Box>
-      <Box  sx={{ p: 3, m: 3 }}>
+      <Box sx={{ p: 3, m: 3 }}>
         {currentItems.map((item) => (
-          <Zoom  key={item.id} in timeout={{enter:2000}}>
-          <Paper elevation={4}sx={{width: "80vw",margin:"2rem", padding:"1rem"}} >                 
-         
-            <Link to={`/detail/${item.id}`} >             
-                <Typography className='link'  variant="h6">{item.Number} {item.Name}</Typography>
-                            
-              </Link>
-            <ContainmentText text={item.Containment} maxChars={200} />
-            
-          </Paper></Zoom>
+          <Box key={item.id}>
+            <Zoom in timeout={{ enter: 2000 }}>
+              <Paper elevation={4} sx={{ width: "80vw", margin: "2rem", padding: "1rem" }} >
+                <Link to={`/detail/${item.id}`} >
+                  <Typography variant="h6" sx={{
+                    '&:link': {
+                      color: 'blue',
+                    },
+                    '&:visited': {
+                      color: 'purple',
+                    },
+                    '&:hover': {
+                      textDecoration: 'underline',
+                      color: 'green',
+                    },
+                    '&:active': {
+                      color: 'primary',
+                      textDecoration: 'none'
+                    },
+                  }}>{item.Number} {item.Name}</Typography>
+                </Link>
+                <ContainmentText text={item.Containment} maxChars={200} />
+              </Paper>
+            </Zoom>
+          </Box>
         ))}
       </Box>
       <Button
@@ -106,11 +112,7 @@ function Home() {
       >
         Next Page
       </Button>
-
-          
-
     </Box>
-    
   );
 }
 
