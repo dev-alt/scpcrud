@@ -16,19 +16,35 @@ import { db } from '../../utils/DbConfig';
 import { collection, addDoc } from 'firebase/firestore';
 
 function CreateEntry() {
+    // Define the state variables
     const [entryNumber, setEntryNumber] = useState('');
     const [entryName, setEntryName] = useState('');
     const [entryDescription, setEntryDescription] = useState('');
     const [entryContainment, setEntryContainment] = useState('');
     const [selectedObjectClass, setSelectedObjectClass] = useState('');
-    const [hasAddendum, setHasAddendum] = useState(false); // Define the state variable
-    const [hasHistory, setHasHistory] = useState(false); // Define the state variable
-    const [hasNotes, setHasNotes] = useState(false); // Define the state variable
-    const [hasReferences, setHasReferences] = useState(false); // Define the state variable
-
+    const [hasAddendum, setHasAddendum] = useState(false); 
+    const [hasHistory, setHasHistory] = useState(false); 
+    const [hasNotes, setHasNotes] = useState(false); 
+    const [hasReferences, setHasReferences] = useState(false); 
+   const [entryAddendumText, setEntryAddendumText] = useState(''); 
+   const [entryHistoryText, setEntryHistoryText] = useState(''); 
+   const [entryNotesText, setEntryNotesText] = useState(''); 
+   const [entryReferencesText, setEntryReferencesText] = useState(''); 
+   
+    // Define the database collection
     const dataCollection = collection(db, 'data');
     const objectClasses = ['Safe', 'Euclid', 'Keter', 'Thaumiel'];
 
+    
+    /**
+     * Handles the submission of a new entry by creating a data object with the form input values,
+     * including optional fields if their corresponding checkboxes are checked, and adds it to the
+     * specified data collection using the `addDoc` function. Then clears the form fields and resets
+     * the checkbox states.
+     *
+     * @param {Event} event - The form submission event.
+     * @returns {Promise<void>} A Promise that resolves when the new entry has been added to the data collection.
+     */
     const handleCreateEntry = async (event) => {
         event.preventDefault();
 
@@ -94,11 +110,8 @@ function CreateEntry() {
     const handleReferencesCheckboxChange = (event) => {
         setHasReferences(event.target.checked);
     };
-    const [entryAddendumText, setEntryAddendumText] = useState(''); // Addendum text state
-    const [entryHistoryText, setEntryHistoryText] = useState(''); // History text state
-    const [entryNotesText, setEntryNotesText] = useState(''); // Notes text state
-    const [entryReferencesText, setEntryReferencesText] = useState(''); // References text state
-    return (
+
+ return (
         <Box>
             <Box sx={{ mt: 0, textAlign: 'center', color: 'error.main' }}>
             <Typography variant='h6' sx={{ textAlign: 'center', color: 'red' }}>Create Entry</Typography>

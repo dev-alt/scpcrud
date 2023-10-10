@@ -33,11 +33,12 @@ function Detail() {
                 </Box>
                 {scpDetails ? (
                     <div>
-                        <Typography variant="h2" sx={{ mb: 1 }}>{scpDetails.Number}</Typography>
-                        <Typography variant="h5" sx={{ mb: 2 }}>{scpDetails.Name}</Typography>
-                        <Typography variant='h4' sx={{ mb: 3 }}>Special Containment Procedures: </Typography>
+                        <Typography variant="h3" sx={{ mb: 1 }}>{scpDetails.Number}</Typography>
+                        <Typography variant="h4" sx={{ mb: 2 }}>{scpDetails.Name}</Typography>
+                        <Typography variant="h4" sx={{ mb: 2 }}>{scpDetails.ObjectClass}</Typography>
+                        <Typography variant='h6' sx={{ mb: 3 }}>Special Containment Procedures: </Typography>
                         <Typography>{scpDetails.Containment}</Typography>
-                        <Typography variant='h4' sx={{ mt: 1, mb: 3 }}>Description: </Typography>
+                        <Typography variant='h6' sx={{ mt: 1, mb: 3 }}>Description: </Typography>
                         <Typography>{scpDetails.Description}</Typography>
 
                         <Button
