@@ -3,10 +3,10 @@ import {
     Box,
     Button,
     TextField,
-    Select,
-    MenuItem,
-    FormControl,
-    InputLabel,
+    // Select,
+    // MenuItem,
+    // FormControl,
+    // InputLabel,
     FormControlLabel,
     Checkbox,
     FormGroup,
@@ -15,6 +15,8 @@ import {
 import { db } from '../../utils/DbConfig';
 import { collection, addDoc } from 'firebase/firestore';
 
+
+
 function CreateEntry() {
     // Define the state variables
     const [entryNumber, setEntryNumber] = useState('');
@@ -22,20 +24,20 @@ function CreateEntry() {
     const [entryDescription, setEntryDescription] = useState('');
     const [entryContainment, setEntryContainment] = useState('');
     const [selectedObjectClass, setSelectedObjectClass] = useState('');
-    const [hasAddendum, setHasAddendum] = useState(false); 
-    const [hasHistory, setHasHistory] = useState(false); 
-    const [hasNotes, setHasNotes] = useState(false); 
-    const [hasReferences, setHasReferences] = useState(false); 
-   const [entryAddendumText, setEntryAddendumText] = useState(''); 
-   const [entryHistoryText, setEntryHistoryText] = useState(''); 
-   const [entryNotesText, setEntryNotesText] = useState(''); 
-   const [entryReferencesText, setEntryReferencesText] = useState(''); 
-   
+    const [hasAddendum, setHasAddendum] = useState(false);
+    const [hasHistory, setHasHistory] = useState(false);
+    const [hasNotes, setHasNotes] = useState(false);
+    const [hasReferences, setHasReferences] = useState(false);
+    const [entryAddendumText, setEntryAddendumText] = useState('');
+    const [entryHistoryText, setEntryHistoryText] = useState('');
+    const [entryNotesText, setEntryNotesText] = useState('');
+    const [entryReferencesText, setEntryReferencesText] = useState('');
+
     // Define the database collection
     const dataCollection = collection(db, 'data');
     const objectClasses = ['Safe', 'Euclid', 'Keter', 'Thaumiel'];
 
-    
+
     /**
      * Handles the submission of a new entry by creating a data object with the form input values,
      * including optional fields if their corresponding checkboxes are checked, and adds it to the
@@ -110,11 +112,21 @@ function CreateEntry() {
     const handleReferencesCheckboxChange = (event) => {
         setHasReferences(event.target.checked);
     };
-
- return (
-        <Box>
+    const handleObjectClassChange = (objectClass) => {
+        setSelectedObjectClass(objectClass);
+    };
+    return (
+        <Box    sx={{
+            width: '80%',
+            margin: '0 auto', 
+            marginTop: '25px', 
+            background: '#f0f0f0',
+            padding: '20px',
+            borderRadius: '8px',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+        }} >
             <Box sx={{ mt: 0, textAlign: 'center', color: 'error.main' }}>
-            <Typography variant='h6' sx={{ textAlign: 'center', color: 'red' }}>Create Entry</Typography>
+                <Typography variant='h6' sx={{ textAlign: 'center', color: 'red' }}>Create Entry</Typography>
 
             </Box>
             <form onSubmit={handleCreateEntry}>
@@ -140,23 +152,25 @@ function CreateEntry() {
                         value={entryName}
                         onChange={(event) => setEntryName(event.target.value)}
                     />
+<Box sx={{ display: 'flex', flexDirection: 'column',border: '1px solid #000',  }}>
+    <Typography variant="subtitle1" sx={{ml: 5 }}>Object Class</Typography>
+    <FormGroup sx={{ display: 'flex', flexDirection: 'row', ml: 5  }}>
+        {objectClasses.map((objectClass) => (
+            <FormControlLabel
+                key={objectClass}
+                control={
+                    <Checkbox
+                        checked={selectedObjectClass === objectClass}
+                        onChange={() => handleObjectClassChange(objectClass)}
+                        name={objectClass}
+                    />
+                }
+                label={objectClass}
+            />
+        ),)}
+    </FormGroup>
+</Box>
 
-                    <FormControl variant="outlined">
-                        <InputLabel id="object-class-label">Select Object Class</InputLabel>
-                        <Select
-                            labelId="object-class-label"
-                            id="object-class"
-                            value={selectedObjectClass}
-                            onChange={(event) => setSelectedObjectClass(event.target.value)}
-                            label="Select Object Class"
-                        >
-                            {objectClasses.map((objectClass) => (
-                                <MenuItem key={objectClass} value={objectClass}>
-                                    {objectClass}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
                     <TextField
                         name="containment"
                         label="Containment"
@@ -166,7 +180,7 @@ function CreateEntry() {
                         value={entryContainment}
                         onChange={(event) => setEntryContainment(event.target.value)}
                     />
-                                        <TextField
+                    <TextField
                         name="description"
                         label="Description"
                         variant="outlined"
