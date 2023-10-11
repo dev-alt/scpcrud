@@ -4,7 +4,7 @@ import { Box, Typography, Button, Paper, Tooltip, Zoom } from '@mui/material';
 import { db } from '../utils/DbConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
-import '../utils/style.css'
+
 
 // Define the ContainmentText component outside of Home
 function ContainmentText({ text, maxChars }) {
@@ -82,7 +82,7 @@ function Home() {
                       color: 'blue',
                     },
                     '&:visited': {
-                      color: 'purple',
+                      color: 'red',
                     },
                     '&:hover': {
                       textDecoration: 'underline',
