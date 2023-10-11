@@ -4,6 +4,9 @@ import { Box, Typography, Button, Paper, Tooltip, Zoom } from '@mui/material';
 import { db } from '../utils/DbConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
+import IconButton from '@mui/material/IconButton';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 
 // Define the ContainmentText component outside of Home
@@ -67,51 +70,69 @@ function Home() {
   };
 
   return (
-    <Box>
-      <Box sx={{ mt: 0, textAlign: 'center', color: "primary.dark" }}>
-        <Typography variant='h3' sx={{ textAlign: 'center' }}>SCP Foundation</Typography>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ width: '10%', flex: '0 0 10%' }}>
       </Box>
-      <Box sx={{ p: 3, m: 3 }}>
-        {currentItems.map((item) => (
-          <Box key={item.id}>
-            <Zoom in timeout={{ enter: 2000 }}>
-              <Paper elevation={4} sx={{ width: "80vw", margin: "2rem", padding: "1rem" }} >
-                <Link to={`/detail/${item.id}`} >
-                  <Typography variant="h6" sx={{
-                    '&:link': {
-                      color: 'blue',
-                    },
-                    '&:visited': {
-                      color: 'red',
-                    },
-                    '&:hover': {
-                      textDecoration: 'underline',
-                      color: 'green',
-                    },
-                    '&:active': {
-                      color: 'primary',
-                      textDecoration: 'none'
-                    },
-                  }}>{item.Number} {item.Name}</Typography>
-                </Link>
-                <ContainmentText text={item.Containment} maxChars={200} />
-              </Paper>
-            </Zoom>
+
+
+      <Box sx={{ width: '80%', flex: '0 0 80%', display: 'flex', flexDirection: 'row' }}>
+        <Box sx={{ flex: '0 0 80%', display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ mt: 0, textAlign: 'center', color: "primary.dark" }}>
+            <Typography variant='h3' sx={{ textAlign: 'center' }}>SCP Foundation</Typography>
           </Box>
-        ))}
+          <Box sx={{ p: 3, m: 3 }}>
+            {currentItems.map((item) => (
+              <Box key={item.id}>
+                <Zoom in timeout={{ enter: 2000 }}>
+                  <Paper elevation={4} sx={{ width: "100%", margin: "2rem", padding: "1rem" }} >
+                    <Link to={`/detail/${item.id}`} >
+                      <Typography variant="h6" sx={{
+                        '&:link': {
+                          color: 'blue',
+                        },
+                        '&:visited': {
+                          color: 'red',
+                        },
+                        '&:hover': {
+                          textDecoration: 'underline',
+                          color: 'green',
+                        },
+                        '&:active': {
+                          color: 'primary',
+                          textDecoration: 'none'
+                        },
+                      }}>{item.Number} {item.Name}</Typography>
+                    </Link>
+                    <ContainmentText text={item.Containment} maxChars={200} />
+                  </Paper>
+                </Zoom>
+              </Box>
+            ))}
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <IconButton
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              aria-label="Previous Page"
+              aria-disabled={currentPage === 1}
+            >
+              <ChevronLeftIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={indexOfLastItem >= data.length}
+              aria-label="Next Page"
+              aria-disabled={indexOfLastItem >= data.length}
+            >
+              <ChevronRightIcon />
+            </IconButton>
+          </Box>
+
+        </Box>
+
+        <Box sx={{ flex: '0 0 10%' }}>
+        </Box>
       </Box>
-      <Button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        Previous Page
-      </Button>
-      <Button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={indexOfLastItem >= data.length}
-      >
-        Next Page
-      </Button>
     </Box>
   );
 }

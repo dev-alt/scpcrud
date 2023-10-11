@@ -42,7 +42,6 @@ function Detail() {
                         <Typography variant='h5' sx={{ mb: 3 }}>Special Containment Procedures: </Typography>
                         <Typography>{scpDetails.Containment}</Typography>
                         <Typography variant='h5' sx={{ mt: 2,mb:1 }}>Description: </Typography>
-                        <Typography variant="h4" sx={{ mb: 2 }}>{scpDetails.ObjectClass}</Typography>
                         <Typography>{scpDetails.Description}</Typography>
                         <Tooltip title="Edit">
                         <IconButton
