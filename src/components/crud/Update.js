@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField, Typography, FormGroup, FormControlLabel, Checkbox, InputLabel, Grid } from '@mui/material';
+import { Box, Button, TextField, Typography, FormControl, FormControlLabel, Checkbox, InputLabel, Grid } from '@mui/material';
 import { db } from '../../utils/DbConfig';
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -127,6 +127,9 @@ function Update() {
 
             </Box>
             <form onSubmit={crudUpdate}>
+      
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5, margin: 5 }}>
+                <Grid item xs={12} md={2}>
                 <TextField
                     name="itemId"
                     label="Item ID"
@@ -134,28 +137,30 @@ function Update() {
                     value={itemId}
                     disabled // Make the input read-only
                 />
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5, margin: 5 }}>
+                </Grid>
                     <Grid container spacing={2}>
-                        <Grid item xs={2}>
+                        <Grid item xs={12} md={2}>
                             <TextField
                                 name="number"
                                 label="Number"
                                 variant="outlined"
                                 value={dataNumber}
                                 onChange={(event) => setDataNumber(event.target.value)}
+                                fullWidth
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 name="name"
                                 label="Name"
                                 variant="outlined"
                                 value={dataName}
                                 onChange={(event) => setDataName(event.target.value)}
+                                fullWidth 
                             />
                         </Grid>
-                        <Grid item xs={4}>
-                            <FormGroup sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                        <Grid item xs={12} md={4} lg={2}>
+                            <FormControl fullWidth>
                                 <InputLabel shrink>Object Class</InputLabel>
                                 {objectClasses.map((objectClass) => (
                                     <FormControlLabel
@@ -170,7 +175,7 @@ function Update() {
                                         label={objectClass}
                                     />
                                 ))}
-                            </FormGroup>
+                            </FormControl>
                         </Grid>
                     </Grid>
 
