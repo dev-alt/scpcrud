@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Box, Menu, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, Menu, MenuItem, IconButton } from '@mui/material';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../utils/DbConfig';
 import { useEffect, useState, useRef } from 'react';
+import AddIcon from '@mui/icons-material/Add';
 
 function Header() {
   const [files, setFiles] = useState([]);
@@ -60,12 +61,17 @@ function Header() {
             Files
           </Button>
           <Menu id="file-menu" anchorEl={anchorRef.current} open={open} onClose={handleClose}>
-            {files.map((file) => (
-              <MenuItem key={file.id} onClick={handleClose} component={Link} to={`/detail/${file.id}`}>
-                {file.Number} 
-              </MenuItem>
-            ))}
+          {files.map((file) => (
+  <MenuItem key={file.id} onClick={handleClose} component={Link} to={`/detail/${file.id}`}>
+    {file.Number}
+  </MenuItem>
+))}
+            <IconButton sx={{ ml: 3 }} component={Link} to="/create" color="inherit">
+              <AddIcon />
+            </IconButton>
           </Menu>
+
+
         </Box>
       </Toolbar>
     </AppBar>
