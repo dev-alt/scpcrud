@@ -71,20 +71,16 @@ function Home() {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Box sx={{ width: '10%', flex: '0 0 10%' }}>
-      </Box>
-
-
-      <Box sx={{ width: '80%', flex: '0 0 80%', display: 'flex', flexDirection: 'row' }}>
-        <Box sx={{ flex: '0 0 80%', display: 'flex', flexDirection: 'column' }}>
-          <Box sx={{ mt: 0, textAlign: 'center', color: "primary.dark" }}>
-            <Typography variant='h3' sx={{ textAlign: 'center' }}>SCP Foundation</Typography>
-          </Box>
+    <Box sx={{ width: '100%', flex: '0 0 100%' }}>
+      <Box sx={{ width: '100%', flex: '0 0 100%', display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ mt: 0, textAlign: 'center', color: "primary.dark" }}>
+          <Typography variant='h3' sx={{ textAlign: 'center' }}>SCP Foundation</Typography>
+        </Box>
           <Box sx={{ p: 3, m: 3 }}>
             {currentItems.map((item) => (
               <Box key={item.id}>
                 <Zoom in timeout={{ enter: 2000 }}>
-                  <Paper elevation={4} sx={{ width: "100%", margin: "2rem", padding: "1rem" }} >
+                  <Paper elevation={4} sx={{ width: "90%", margin: "2rem", padding: "1rem" }} >
                     <Link to={`/detail/${item.id}`} >
                       <Typography variant="h6" sx={{
                         '&:link': {
@@ -127,14 +123,11 @@ function Home() {
               <ChevronRightIcon />
             </IconButton>
           </Box>
-
-        </Box>
-
-        <Box sx={{ flex: '0 0 10%' }}>
         </Box>
       </Box>
     </Box>
   );
 }
+
 
 export default Home;
