@@ -6,7 +6,7 @@ import {
     // Select,
     // MenuItem,
     // FormControl,
-    // InputLabel,
+    Grid,
     FormControlLabel,
     Checkbox,
     FormGroup,
@@ -116,10 +116,10 @@ function CreateEntry() {
         setSelectedObjectClass(objectClass);
     };
     return (
-        <Box    sx={{
+        <Box sx={{
             width: '80%',
-            margin: '0 auto', 
-            marginTop: '25px', 
+            margin: '0 auto',
+            marginTop: '25px',
             background: '#f0f0f0',
             padding: '20px',
             borderRadius: '8px',
@@ -131,45 +131,56 @@ function CreateEntry() {
             </Box>
             <form onSubmit={handleCreateEntry}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5, margin: 5 }}>
-                    <TextField
-                        name="number"
-                        label="Number"
-                        variant="outlined"
-                        value={entryNumber}
-                        onChange={(event) => {
-                            const enteredValue = event.target.value;
-                            // Remove any non-numeric characters from the input
-                            const numericValue = enteredValue.replace(/\D/g, '');
-                            // Set the state with the "SCP-" prefix and the numeric value
-                            setEntryNumber(`SCP-${numericValue}`);
-                        }}
-                        placeholder="SCP-"
-                    />
-                    <TextField
-                        name="name"
-                        label="Name"
-                        variant="outlined"
-                        value={entryName}
-                        onChange={(event) => setEntryName(event.target.value)}
-                    />
-<Box sx={{ display: 'flex', flexDirection: 'column',border: '1px solid #000',  }}>
-    <Typography variant="subtitle1" sx={{ml: 5 }}>Object Class</Typography>
-    <FormGroup sx={{ display: 'flex', flexDirection: 'row', ml: 5  }}>
-        {objectClasses.map((objectClass) => (
-            <FormControlLabel
-                key={objectClass}
-                control={
-                    <Checkbox
-                        checked={selectedObjectClass === objectClass}
-                        onChange={() => handleObjectClassChange(objectClass)}
-                        name={objectClass}
-                    />
-                }
-                label={objectClass}
-            />
-        ),)}
-    </FormGroup>
-</Box>
+
+                    <Grid container spacing={2}>
+                        <Grid item xs={2}>
+
+                            <TextField
+                                name="number"
+                                label="Number"
+                                variant="outlined"
+                                value={entryNumber}
+                                onChange={(event) => {
+                                    const enteredValue = event.target.value;
+                                    // Remove any non-numeric characters from the input
+                                    const numericValue = enteredValue.replace(/\D/g, '');
+                                    // Set the state with the "SCP-" prefix and the numeric value
+                                    setEntryNumber(`SCP-${numericValue}`);
+                                }}
+                                placeholder="SCP-"
+                            />
+
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                name="name"
+                                label="Name"
+                                variant="outlined"
+                                value={entryName}
+                                onChange={(event) => setEntryName(event.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                        <FormGroup sx={{ display: 'flex', flexDirection: 'row', ml: 5 }}>
+                            {objectClasses.map((objectClass) => (
+                                <FormControlLabel
+                                    key={objectClass}
+                                    control={
+                                        <Checkbox
+                                            checked={selectedObjectClass === objectClass}
+                                            onChange={() => handleObjectClassChange(objectClass)}
+                                            name={objectClass}
+                                        />
+                                    }
+                                    label={objectClass}
+                                />
+                            ),)}
+                        </FormGroup>
+                        </Grid>
+                    </Grid>
+
+
+
 
                     <TextField
                         name="containment"
