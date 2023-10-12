@@ -33,9 +33,33 @@ function Detail() {
                     <Box sx={{ mt: 0, textAlign: 'center', color: 'error.main' }}>
 
                     </Box>
-
+               
                     {scpDetails ? (
+                        
                         <Box>
+                                 <Box sx={{ display: 'flex', justifyContent: 'center', borderBottom: '2px solid grey'}}>
+                            <Tooltip title="Edit">
+                                <IconButton
+                                    variant="text"
+                                    color="primary"
+                                    component={Link}
+                                    to={`/update/${scpDetails.id}`}
+                                >
+                                    <EditNoteIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Delete">
+                                <IconButton
+                                    variant="text"
+                                    color='error'
+
+                                    component={Link}
+                                    to={`/delete/${scpDetails.id}`}
+                                >        <DeleteIcon />
+
+                                </IconButton>
+                            </Tooltip>
+                            </Box>
                             <Typography variant="h3" sx={{ mb: 1 }}>{scpDetails.Number}</Typography>
                             <Typography variant="h6" sx={{ mb: 2 }}>{scpDetails.Name}</Typography>
                             <Typography variant="caption" sx={{ mb: 2 }}>{scpDetails.ObjectClass}</Typography>
@@ -70,27 +94,8 @@ function Detail() {
                 <Typography>{scpDetails.ReferencesText}</Typography>
             </div>
         )}
-                            <Tooltip title="Edit">
-                                <IconButton
-                                    variant="text"
-                                    color="primary"
-                                    component={Link}
-                                    to={`/update/${scpDetails.id}`}
-                                >
-                                    <EditNoteIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Delete">
-                                <IconButton
-                                    variant="text"
-                                    color='error'
+        <br />
 
-                                    component={Link}
-                                    to={`/delete/${scpDetails.id}`}
-                                >        <DeleteIcon />
-
-                                </IconButton>
-                            </Tooltip>
                         </Box>
                     ) : (
                         <p>SCP Entry not found.</p>
