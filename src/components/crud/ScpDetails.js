@@ -29,37 +29,45 @@ function Detail() {
         <Box>
             <Typography variant='h6' sx={{ textAlign: 'center', color: 'primary' }}>SCP Entry Details</Typography>
             <Zoom in timeout={2000}>
-                <Paper elevation={3} sx={{ p: 3, m: 3 }}>
+            <Paper elevation={3} sx={{ p: 3, m: 3, position: 'relative' }}>
                     <Box sx={{ mt: 0, textAlign: 'center', color: 'error.main' }}>
 
                     </Box>
                
                     {scpDetails ? (
                         
+                        
                         <Box>
-                                 <Box sx={{ display: 'flex', justifyContent: 'center', borderBottom: '2px solid grey'}}>
-                            <Tooltip title="Edit">
-                                <IconButton
-                                    variant="text"
-                                    color="primary"
-                                    component={Link}
-                                    to={`/update/${scpDetails.id}`}
-                                >
-                                    <EditNoteIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Delete">
-                                <IconButton
-                                    variant="text"
-                                    color='error'
-
-                                    component={Link}
-                                    to={`/delete/${scpDetails.id}`}
-                                >        <DeleteIcon />
-
-                                </IconButton>
-                            </Tooltip>
-                            </Box>
+                             <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                        zIndex: 1, // To ensure the buttons appear above the Paper
+                        display: 'flex',
+                    }}
+                >
+                    <Tooltip title="Edit">
+                        <IconButton
+                            variant="text"
+                            color="primary"
+                            component={Link}
+                            to={`/update/${scpDetails.id}`}
+                        >
+                            <EditNoteIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                        <IconButton
+                            variant="text"
+                            color='error'
+                            component={Link}
+                            to={`/delete/${scpDetails.id}`}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
                             <Typography variant="h3" sx={{ mb: 1 }}>{scpDetails.Number}</Typography>
                             <Typography variant="h6" sx={{ mb: 2 }}>{scpDetails.Name}</Typography>
                             <Typography variant="caption" sx={{ mb: 2 }}>{scpDetails.ObjectClass}</Typography>
