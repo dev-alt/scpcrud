@@ -177,6 +177,8 @@ function CreateEntry() {
                         name="description"
                         label="Description"
                         variant="outlined"
+                        multiline
+                        rows={4}
                         value={entryDescription}
                         onChange={(event) => setEntryDescription(event.target.value)}
                         fullWidth
