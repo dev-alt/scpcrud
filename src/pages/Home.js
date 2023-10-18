@@ -1,11 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Typography, Paper, Tooltip, Zoom, IconButton, useTheme, Button } from '@mui/material';
-import { db } from '../utils/DbConfig';
-import { collection, getDocs } from 'firebase/firestore';
-import ReadMoreIcon from '@mui/icons-material/ReadMore';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  Paper,
+  Tooltip,
+  Zoom,
+  IconButton,
+  useTheme,
+  Button,
+} from "@mui/material";
+import { db } from "../utils/DbConfig";
+import { collection, getDocs } from "firebase/firestore";
+import ReadMoreIcon from "@mui/icons-material/ReadMore";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 function ContainmentText({ text, maxChars }) {
   const [showFullText, setShowFullText] = useState(false);
@@ -19,14 +28,22 @@ function ContainmentText({ text, maxChars }) {
           <Tooltip title="Read More">
             <Button
               onClick={() => setShowFullText(true)}
-              style={{ cursor: 'pointer', border: 'none', background: 'none', padding: 0 }}
+              style={{
+                cursor: "pointer",
+                border: "none",
+                background: "none",
+                padding: 0,
+              }}
             >
               <ReadMoreIcon />
             </Button>
           </Tooltip>
         )}
         {showFullText && (
-          <Button onClick={() => setShowFullText(false)} style={{ cursor: 'pointer' }}>
+          <Button
+            onClick={() => setShowFullText(false)}
+            style={{ cursor: "pointer" }}
+          >
             Show Less
           </Button>
         )}
@@ -43,7 +60,7 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const OurCollection = collection(db, 'data');
+      const OurCollection = collection(db, "data");
       const snapshot = await getDocs(OurCollection);
 
       const items = [];
@@ -75,28 +92,39 @@ function Home() {
     setCurrentPage(newPage);
   };
 
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Box sx={{ width: '100%', flex: '0 0 100%' }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <Box sx={{ width: "100%", flex: "0 0 100%" }}>
         <Box
           sx={{
-            width: '100%',
-            flex: '0 0 100%',
-            display: 'flex',
-            flexDirection: 'column',
+            width: "100%",
+            flex: "0 0 100%",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <Box
             sx={{
               mt: 0,
-              textAlign: 'center',
+              textAlign: "center",
               color: "primary.dark",
-              [theme.breakpoints.up('md')]: {
-                fontSize: '2.5rem', // Adjust font size for medium screens and larger
+              [theme.breakpoints.up("md")]: {
+                fontSize: "2.5rem", // Adjust font size for medium screens and larger
               },
             }}
           >
-            <Typography variant='h3' sx={{ textAlign: 'center' }}>
+            <Typography
+              variant="h3"
+              color="secondary"
+              sx={{ textAlign: "center" }}
+            >
               SCP Foundation
             </Typography>
           </Box>
@@ -107,51 +135,61 @@ function Home() {
                   <Paper
                     elevation={4}
                     sx={(theme) => ({
-                      width: '90%', // Default width for smaller screens
-                      margin: '2rem auto', // Center horizontally
-                      padding: '1rem',
-                      [theme.breakpoints.up('md')]: {
-                        width: '60%', // Adjust width for medium screens and larger
+                      width: "90%", // Default width for smaller screens
+                      margin: "2rem auto", // Center horizontally
+                      padding: "1rem",
+                      [theme.breakpoints.up("md")]: {
+                        width: "60%", // Adjust width for medium screens and larger
                       },
-                      [theme.breakpoints.up('lg')]: {
-                        width: '80%', // Adjust width for larger screens
+                      [theme.breakpoints.up("lg")]: {
+                        width: "80%", // Adjust width for larger screens
                       },
                     })}
                   >
                     <Link to={`/detail/${item.id}`}>
                       <Typography
-                        variant='h6'
+                        variant="h6"
                         sx={{
-                          '&:link': {
-                            color: 'blue',
+                          "&:link": {
+                            color: "text.secondary",
+                            textDecoration: "none",
                           },
-                          '&:visited': {
-                            color: 'red',
+                          "&:visited": {
+                            color: "red",
                           },
-                          '&:hover': {
-                            textDecoration: 'underline',
-                            color: 'green',
+                          "&:hover": {
+                            textDecoration: "underline",
+                            color: "green",
                           },
-                          '&:active': {
-                            color: 'primary',
-                            textDecoration: 'none',
+                          "&:active": {
+                            color: "primary",
+                            textDecoration: "none",
                           },
                         }}
                       >
                         {item.Number} {item.Name}
                       </Typography>
                     </Link>
-                    <ContainmentText text={item.Containment} maxChars={maxChars} />
+                    <ContainmentText
+                      text={item.Containment}
+                      maxChars={maxChars}
+                    />
                   </Paper>
                 </Zoom>
               </Box>
             ))}
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <IconButton
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              aria-label='Previous Page'
+              aria-label="Previous Page"
               aria-disabled={currentPage === 1}
             >
               <ChevronLeftIcon />
@@ -159,7 +197,7 @@ function Home() {
             <IconButton
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={indexOfLastItem >= data.length}
-              aria-label='Next Page'
+              aria-label="Next Page"
               aria-disabled={indexOfLastItem >= data.length}
             >
               <ChevronRightIcon />

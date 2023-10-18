@@ -43,7 +43,7 @@ export  const themeOptions = {
         fontFamily: 'Montserrat',
       },
       caption: {
-        fontFamily: 'Droid Sans',
+        fontFamily: 'Share Tech Mono',
       },
       button: {
         fontFamily: 'Lato',
