@@ -13,10 +13,11 @@ import { collection, doc, getDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+
 function Detail() {
   const { itemId } = useParams();
   const [scpDetails, setScpDetails] = useState(null);
-  // const [loading,setLoading]=useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       const OurCollection = collection(db, "data");
@@ -31,14 +32,6 @@ function Detail() {
     };
     fetchData();
   }, [itemId]);
-
-  //   useEffect(
-  //     ()=>{
-  //         setTimeout(() => {
-  //             setLoading(false)
-  //         }, 1000);
-  //     }
-  //   )
 
   return (
     <Box>

@@ -135,7 +135,7 @@ function Home() {
               textAlign: "center",
               color: "primary.dark",
               [theme.breakpoints.up("md")]: {
-                fontSize: "2.5rem", // Adjust font size for medium screens and larger
+                fontSize: "2.5rem",
               },
             }}
           >
@@ -178,12 +178,12 @@ function Home() {
                     <Paper
                       elevation={4}
                       sx={(theme) => ({
-                        width: "90%", // Default width for smaller screens
-                        margin: "2rem auto", // Center horizontally
+                        width: "90%",
+                        margin: "2rem auto",
                         padding: "1rem",
 
                         [theme.breakpoints.up("lg")]: {
-                          width: "80%", // Adjust width for larger screens
+                          width: "80%",
                         },
                       })}
                     >
@@ -230,13 +230,13 @@ function Home() {
                     <Paper
                       elevation={4}
                       sx={(theme) => ({
-                        width: "90%", // Default width for smaller screens
-                        margin: "2rem auto", // Center horizontally
+                        width: "90%",
+                        margin: "2rem auto",
                         padding: "1rem",
 
                         [theme.breakpoints.up("lg")]: {
                           width: "80%",
-                          height: "80%", // Adjust width for larger screens
+                          height: "80%",
                         },
                         height: "90%",
                         display: "flex",

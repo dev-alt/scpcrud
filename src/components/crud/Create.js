@@ -143,7 +143,7 @@ function CreateEntry() {
                   setEntryNumber(`SCP-${numericValue}`);
                 }}
                 placeholder="SCP-"
-                fullWidth // Takes full width on all screen sizes
+                fullWidth
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -250,6 +250,10 @@ function CreateEntry() {
               component="label"
               variant="contained"
               startIcon={<CloudUploadIcon />}
+              onClick={() => {
+                const fileInput = document.querySelector('input[type="file"]');
+                fileInput.click();
+              }}
             >
               Upload Image
               <VisuallyHiddenInput type="file" />
