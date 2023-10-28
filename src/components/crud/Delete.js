@@ -8,6 +8,8 @@ function Delete() {
   const { itemId } = useParams();
   const history = useNavigate();
 
+  console.log(itemId)
+
   const handleDelete = async () => {
     try {
       const OurCollection = collection(db, "data");
@@ -17,7 +19,7 @@ function Delete() {
       await deleteDoc(itemRef);
 
       // Redirect to the Read page after successful deletion
-      history.push("/");
+      history("/");
     } catch (error) {
       console.error("Error deleting item:", error);
     }
