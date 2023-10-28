@@ -63,7 +63,7 @@ function Home() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
-  const theme = useTheme(); // Access the MUI theme here
+  const theme = useTheme();
   const totalItems = data.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 

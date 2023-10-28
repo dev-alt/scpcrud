@@ -47,6 +47,19 @@ function Header() {
     setOpen(false);
   };
 
+  const sortedFiles = [...files].sort((a, b) => {
+    const itemA = a.Number.toLowerCase();
+    const itemB = b.Number.toLowerCase();
+    if (itemA < itemB) {
+      return -1;
+    }
+    if (itemA > itemB) {
+      return 1;
+    }
+    return 0;
+  });
+
+  
   return (
     <AppBar
       position="static"
@@ -89,7 +102,7 @@ function Header() {
               open={open}
               onClose={handleClose}
             >
-              {files.map((file) => (
+              {sortedFiles.map((file) => (
                 <MenuItem
                   key={file.id}
                   onClick={handleClose}
