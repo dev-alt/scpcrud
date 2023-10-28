@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -9,12 +9,19 @@ import {
   IconButton,
   useTheme,
   Button,
+  Grid,
+  Divider,
+  Link as MuiLink,
+  Fab,
 } from "@mui/material";
 import { db } from "../utils/DbConfig";
 import { collection, getDocs } from "firebase/firestore";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import banner from "../components/banner.jpg";
+import AddIcon from "@mui/icons-material/Add";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function ContainmentText({ text, maxChars }) {
   const [showFullText, setShowFullText] = useState(false);
@@ -57,6 +64,8 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const theme = useTheme(); // Access the MUI theme here
+  const totalItems = data.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,6 +87,8 @@ function Home() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
+  const [loading, setLoading] = useState(true);
+
   // Define different maxChars based on screen size
   let maxChars;
   if (theme.breakpoints.values.sm > theme.breakpoints.width) {
@@ -89,10 +100,18 @@ function Home() {
   }
 
   const handlePageChange = (newPage) => {
+    setLoading(true);
     setCurrentPage(newPage);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
-  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  });
 
   return (
     <Box
@@ -120,65 +139,123 @@ function Home() {
               },
             }}
           >
-            <Typography
-              variant="h3"
-              color="secondary"
-              sx={{ textAlign: "center" }}
+            <Box
+              sx={{
+                width: "100vw",
+                backgroundImage: `url(${banner})`,
+                height: "15rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              SCP Foundation
-            </Typography>
+              <Typography
+                variant="h2"
+                color="primary"
+                sx={{ textAlign: "center" }}
+              >
+                SCP Foundation
+              </Typography>
+            </Box>
           </Box>
-          <Box sx={{ p: 3, m: 3 }}>
-            {currentItems.map((item) => (
-              <Box key={item.id}>
-                <Zoom in timeout={{ enter: 2000 }}>
-                  <Paper
-                    elevation={4}
-                    sx={(theme) => ({
-                      width: "90%", // Default width for smaller screens
-                      margin: "2rem auto", // Center horizontally
-                      padding: "1rem",
-                      [theme.breakpoints.up("md")]: {
-                        width: "60%", // Adjust width for medium screens and larger
-                      },
-                      [theme.breakpoints.up("lg")]: {
-                        width: "80%", // Adjust width for larger screens
-                      },
-                    })}
-                  >
-                    <Link to={`/detail/${item.id}`}>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          "&:link": {
-                            color: "text.secondary",
+          {loading ? (
+            <Box
+              width="100vw"
+              height="60vw"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CircularProgress color="secondary" />
+            </Box>
+          ) : (
+            <Grid container sx={{ p: 3, m: 3 }}>
+              {currentItems.map((item) => (
+                <Grid item xs={12} sm={6} lg={4} key={item.id}>
+                  <Zoom in timeout={{ enter: 100 }}>
+                    <Paper
+                      elevation={4}
+                      sx={(theme) => ({
+                        width: "90%", // Default width for smaller screens
+                        margin: "2rem auto", // Center horizontally
+                        padding: "1rem",
+
+                        [theme.breakpoints.up("lg")]: {
+                          width: "80%", // Adjust width for larger screens
+                        },
+                      })}
+                    >
+                      <MuiLink href={`/detail/${item.id}`} underline="none">
+                        <Typography
+                          variant="h6"
+                          sx={{
                             textDecoration: "none",
-                          },
-                          "&:visited": {
-                            color: "red",
-                          },
-                          "&:hover": {
-                            textDecoration: "underline",
-                            color: "green",
-                          },
-                          "&:active": {
-                            color: "primary",
-                            textDecoration: "none",
-                          },
-                        }}
-                      >
-                        {item.Number} {item.Name}
-                      </Typography>
-                    </Link>
-                    <ContainmentText
-                      text={item.Containment}
-                      maxChars={maxChars}
-                    />
-                  </Paper>
-                </Zoom>
-              </Box>
-            ))}
-          </Box>
+                            "&:link": {
+                              color: "text.secondary",
+                            },
+                            "&:visited": {
+                              color: "red",
+                            },
+                            "&:hover": {
+                              textDecoration: "underline",
+                              color: "green",
+                            },
+                            "&:active": {
+                              color: "primary",
+                              textDecoration: "none",
+                            },
+                          }}
+                        >
+                          {item.Number} {item.Name}
+                        </Typography>
+                      </MuiLink>
+                      <Divider
+                        variant="fullwidth"
+                        light
+                        sx={{ mt: 1, mb: 2 }}
+                      />
+                      <ContainmentText
+                        text={item.Containment}
+                        maxChars={maxChars}
+                      />
+                    </Paper>
+                  </Zoom>
+                </Grid>
+              ))}
+              {currentPage === totalPages && (
+                <Grid item xs={12} sm={6} lg={4}>
+                  <Zoom in timeout={{ enter: 100 }}>
+                    <Paper
+                      elevation={4}
+                      sx={(theme) => ({
+                        width: "90%", // Default width for smaller screens
+                        margin: "2rem auto", // Center horizontally
+                        padding: "1rem",
+
+                        [theme.breakpoints.up("lg")]: {
+                          width: "80%",
+                          height: "80%", // Adjust width for larger screens
+                        },
+                        height: "90%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      })}
+                    >
+                      <Tooltip title="Create New Entry">
+                        <Fab href="/create" size="large">
+                          <AddIcon />
+                        </Fab>
+                      </Tooltip>
+                    </Paper>
+                  </Zoom>
+                </Grid>
+              )}
+            </Grid>
+          )}
+
           <Box
             sx={{
               display: "flex",
@@ -192,7 +269,7 @@ function Home() {
               aria-label="Previous Page"
               aria-disabled={currentPage === 1}
             >
-              <ChevronLeftIcon />
+              <ChevronLeftIcon color="secondary" />
             </IconButton>
             <IconButton
               onClick={() => handlePageChange(currentPage + 1)}
@@ -200,7 +277,7 @@ function Home() {
               aria-label="Next Page"
               aria-disabled={indexOfLastItem >= data.length}
             >
-              <ChevronRightIcon />
+              <ChevronRightIcon color="secondary" />
             </IconButton>
           </Box>
         </Box>

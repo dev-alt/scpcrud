@@ -10,6 +10,7 @@ import Catalog from "./components/Catalog";
 import Home from "./pages/Home";
 import { themeOptions } from "./utils/Theme";
 import { ThemeProvider } from "@emotion/react";
+import Footer from "./components/Footer";
 
 function App() {
   const theme = createTheme(themeOptions);
@@ -28,6 +29,7 @@ function App() {
           <Route path="/update/:itemId" element={<Update />} />
           <Route path="/delete/:itemId" element={<Delete />} />
         </Routes>
+        <Footer />
       </Router>
     </ThemeProvider>
   );
