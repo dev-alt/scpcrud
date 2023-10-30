@@ -33,6 +33,8 @@ function Detail() {
     fetchData();
   }, [itemId]);
 
+  console.log(scpDetails)
+
   return (
     <Box>
       <Typography variant="h6" sx={{ textAlign: "center", color: "primary" }}>
@@ -83,6 +85,13 @@ function Detail() {
               <Typography variant="caption" sx={{ mb: 2 }}>
                 {scpDetails.ObjectClass}
               </Typography>
+              {scpDetails.imageUrl && (
+                <img
+                  src={scpDetails.imageUrl}
+                  alt="SCP"
+                  style={{ maxWidth: "100%" }}
+                />
+              )}
               <Typography variant="h5" sx={{ mb: 3 }}>
                 Special Containment Procedures:{" "}
               </Typography>

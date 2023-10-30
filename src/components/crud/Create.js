@@ -14,6 +14,8 @@ import { db } from "../../utils/DbConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../utils/DbConfig";
 
 function CreateEntry() {
   const [entryNumber, setEntryNumber] = useState("");
@@ -29,9 +31,11 @@ function CreateEntry() {
   const [entryHistoryText, setEntryHistoryText] = useState("");
   const [entryNotesText, setEntryNotesText] = useState("");
   const [entryReferencesText, setEntryReferencesText] = useState("");
-
+  const [file, setFile] = useState("");
+  const [percent, setPercent] = useState(0);
   const dataCollection = collection(db, "data");
   const objectClasses = ["Safe", "Euclid", "Keter", "Thaumiel"];
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleCreateEntry = async (event) => {
     event.preventDefault();
@@ -59,6 +63,7 @@ function CreateEntry() {
     if (hasReferences) {
       data.ReferencesText = entryReferencesText;
     }
+    data.imageUrl = imageUrl; 
 
     await addDoc(dataCollection, data);
 
@@ -109,6 +114,45 @@ function CreateEntry() {
     width: 1,
   });
 
+  function handleChange(event) {
+    setFile(event.target.files[0]);
+}
+const handleUpload = () => {
+  if (!file) {
+      alert("Please upload an image first!");
+  }
+
+  const storageRef = ref(storage, `/files/${file.name}`);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      const percent = Math.round(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      );
+
+      setPercent(percent);
+    },
+    (err) => {
+      console.log(err);
+      // Handle any potential upload error
+    },
+    () => {
+      // Handle successful upload
+      getDownloadURL(uploadTask.snapshot.ref)
+        .then((url) => {
+          // Now that you have the image URL, you can set it to the state variable
+          setImageUrl(url);
+          console.log(url);
+        })
+        .catch((error) => {
+          // Handle any potential error when getting the download URL
+          console.error("Error getting download URL: ", error);
+        });
+    }
+  );
+};
   return (
     <Box
       sx={{
@@ -246,18 +290,17 @@ function CreateEntry() {
               }
               label="References"
             />
+                        <input type="file" onChange={handleChange} accept="/image/*" />
             <Button
               component="label"
               variant="contained"
               startIcon={<CloudUploadIcon />}
-              onClick={() => {
-                const fileInput = document.querySelector('input[type="file"]');
-                fileInput.click();
-              }}
+              onClick={handleUpload}
             >
               Upload Image
               <VisuallyHiddenInput type="file" />
             </Button>
+            <p>{percent} % done</p>
           </FormGroup>
 
           {hasAddendum && (
