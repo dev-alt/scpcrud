@@ -136,18 +136,14 @@ const handleUpload = () => {
     },
     (err) => {
       console.log(err);
-      // Handle any potential upload error
     },
     () => {
-      // Handle successful upload
       getDownloadURL(uploadTask.snapshot.ref)
         .then((url) => {
-          // Now that you have the image URL, you can set it to the state variable
           setImageUrl(url);
           console.log(url);
         })
         .catch((error) => {
-          // Handle any potential error when getting the download URL
           console.error("Error getting download URL: ", error);
         });
     }
@@ -290,7 +286,7 @@ const handleUpload = () => {
               }
               label="References"
             />
-                        <input type="file" onChange={handleChange} accept="/image/*" />
+           <input type="file" onChange={handleChange} accept="/image/*" />
             <Button
               component="label"
               variant="contained"
