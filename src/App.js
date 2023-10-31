@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Create from "./components/crud/Create";
 import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -14,15 +14,19 @@ import Footer from "./components/Footer";
 
 function App() {
   const theme = createTheme(themeOptions);
-
+  const [searchQuery, setSearchQuery] = useState("");
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Header />
+        <Header setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
         <List />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route
+            exact
+            path="/"
+            element={<Home searchQuery={searchQuery || " "} />}
+          />
           <Route path="/create" element={<Create />} />
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/detail/:itemId" element={<ScpDetails />} />

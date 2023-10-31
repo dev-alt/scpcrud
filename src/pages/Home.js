@@ -58,13 +58,11 @@ function ContainmentText({ text, maxChars }) {
   );
 }
 
-function Home() {
+function Home({ searchQuery }) {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const theme = useTheme();
-  const totalItems = data.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,12 +79,32 @@ function Home() {
 
     fetchData();
   }, []);
-
+  let totalItems;
+  let currentItems;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const [loading, setLoading] = useState(true);
+  const filteredItems = data.filter((item) => {
+    if (typeof searchQuery === "string") {
+      return (
+        item.Number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.Containment.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.Description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    // return currentItems;
+  });
+
+  if (searchQuery) {
+    currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+    totalItems = filteredItems.length;
+  } else {
+    currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    totalItems = data.length;
+  }
 
   // Define different maxChars based on screen size
   let maxChars;
@@ -116,9 +134,11 @@ function Home() {
     <Box
       sx={{
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
       }}
     >
+      {" "}
       <Box sx={{ width: "100%", flex: "0 0 100%" }}>
         <Box
           sx={{
@@ -150,8 +170,12 @@ function Home() {
             >
               <Typography
                 variant="h2"
-                color="primary"
-                sx={{ textAlign: "center" }}
+                color="text.primary"
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "900",
+                  opacity: "60%",
+                }}
               >
                 SCP Foundation
               </Typography>

@@ -14,7 +14,7 @@ import { useEffect, useState, useRef } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import SearchBlock from "./SearchBlock";
 
-function Header() {
+function Header({ setSearchQuery, searchQuery }) {
   const [files, setFiles] = useState([]);
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -59,7 +59,6 @@ function Header() {
     return 0;
   });
 
-  
   return (
     <AppBar
       position="static"
@@ -126,7 +125,10 @@ function Header() {
             </Button>
           </Box>
 
-          <SearchBlock />
+          <SearchBlock
+            setSearchQuery={setSearchQuery}
+            searchQuery={searchQuery}
+          />
         </Box>
       </Toolbar>
     </AppBar>

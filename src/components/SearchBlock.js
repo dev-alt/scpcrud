@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
-const SearchBlock = () => {
+const SearchBlock = ({ setSearchQuery, searchQuery }) => {
   return (
     <Box sx={{ width: "200px", bgcolor: "secondary" }}>
       <TextField
@@ -10,6 +10,10 @@ const SearchBlock = () => {
         placeholder="Find a file"
         margin="dense"
         color="secondary"
+        value={searchQuery}
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
