@@ -7,7 +7,7 @@ const SearchBlock = ({ setSearchQuery, searchQuery }) => {
     <Box sx={{ width: "200px", bgcolor: "secondary" }}>
       <TextField
         variant="outlined"
-        placeholder="Find a file"
+        placeholder="Search an entry"
         margin="dense"
         color="secondary"
         value={searchQuery}

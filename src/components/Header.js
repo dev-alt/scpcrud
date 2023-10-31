@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -15,6 +15,8 @@ import AddIcon from "@mui/icons-material/Add";
 import SearchBlock from "./SearchBlock";
 
 function Header({ setSearchQuery, searchQuery }) {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   const [files, setFiles] = useState([]);
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -125,10 +127,12 @@ function Header({ setSearchQuery, searchQuery }) {
             </Button>
           </Box>
 
-          <SearchBlock
-            setSearchQuery={setSearchQuery}
-            searchQuery={searchQuery}
-          />
+          {isHomePage && (
+            <SearchBlock
+              setSearchQuery={setSearchQuery}
+              searchQuery={searchQuery}
+            />
+          )}
         </Box>
       </Toolbar>
     </AppBar>
