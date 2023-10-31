@@ -63,7 +63,7 @@ function CreateEntry() {
     if (hasReferences) {
       data.ReferencesText = entryReferencesText;
     }
-    data.imageUrl = imageUrl; 
+    data.imageUrl = imageUrl;
 
     await addDoc(dataCollection, data);
 
@@ -116,39 +116,39 @@ function CreateEntry() {
 
   function handleChange(event) {
     setFile(event.target.files[0]);
-}
-const handleUpload = () => {
-  if (!file) {
-      alert("Please upload an image first!");
   }
-
-  const storageRef = ref(storage, `/files/${file.name}`);
-  const uploadTask = uploadBytesResumable(storageRef, file);
-
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      const percent = Math.round(
-        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      );
-
-      setPercent(percent);
-    },
-    (err) => {
-      console.log(err);
-    },
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref)
-        .then((url) => {
-          setImageUrl(url);
-          console.log(url);
-        })
-        .catch((error) => {
-          console.error("Error getting download URL: ", error);
-        });
+  const handleUpload = () => {
+    if (!file) {
+      alert("Please upload an image first!");
     }
-  );
-};
+
+    const storageRef = ref(storage, `/files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+        );
+
+        setPercent(percent);
+      },
+      (err) => {
+        console.log(err);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((url) => {
+            setImageUrl(url);
+            console.log(url);
+          })
+          .catch((error) => {
+            console.error("Error getting download URL: ", error);
+          });
+      },
+    );
+  };
   return (
     <Box
       sx={{
@@ -286,7 +286,7 @@ const handleUpload = () => {
               }
               label="References"
             />
-           <input type="file" onChange={handleChange} accept="/image/*" />
+            <input type="file" onChange={handleChange} accept="/image/*" />
             <Button
               component="label"
               variant="contained"

@@ -33,7 +33,7 @@ function Detail() {
     fetchData();
   }, [itemId]);
 
-  console.log(scpDetails)
+  console.log(scpDetails);
 
   return (
     <Box>
