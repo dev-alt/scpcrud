@@ -59,7 +59,6 @@ function Header() {
     return 0;
   });
 
-  
   return (
     <AppBar
       position="static"

@@ -8,7 +8,7 @@ function Delete() {
   const { itemId } = useParams();
   const history = useNavigate();
 
-  console.log(itemId)
+  console.log(itemId);
 
   const handleDelete = async () => {
     try {

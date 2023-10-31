@@ -13,6 +13,7 @@ import {
   Link as MuiLink,
   Fab,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { db } from "../utils/DbConfig";
 import { collection, getDocs } from "firebase/firestore";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
@@ -186,30 +187,35 @@ function Home() {
                         },
                       })}
                     >
-                      <MuiLink href={`/detail/${item.id}`} underline="none">
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            textDecoration: "none",
-                            "&:link": {
-                              color: "text.secondary",
-                            },
-                            "&:visited": {
-                              color: "red",
-                            },
-                            "&:hover": {
-                              textDecoration: "underline",
-                              color: "green",
-                            },
-                            "&:active": {
-                              color: "primary",
+                      <Link
+                        to={`/detail/${item.id}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <MuiLink href={`/detail/${item.id}`} underline="none">
+                          <Typography
+                            variant="h6"
+                            sx={{
                               textDecoration: "none",
-                            },
-                          }}
-                        >
-                          {item.Number} {item.Name}
-                        </Typography>
-                      </MuiLink>
+                              "&:link": {
+                                color: "text.secondary",
+                              },
+                              "&:visited": {
+                                color: "red",
+                              },
+                              "&:hover": {
+                                textDecoration: "underline",
+                                color: "green",
+                              },
+                              "&:active": {
+                                color: "primary",
+                                textDecoration: "none",
+                              },
+                            }}
+                          >
+                            {item.Number} {item.Name}
+                          </Typography>
+                        </MuiLink>
+                      </Link>
                       <Divider
                         variant="fullwidth"
                         light
