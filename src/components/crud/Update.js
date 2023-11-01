@@ -9,13 +9,15 @@ import {
   Checkbox,
   InputLabel,
   Grid,
+  LinearProgress,
 } from "@mui/material";
 import { db } from "../../utils/DbConfig";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useParams, useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../utils/DbConfig";
 function Update() {
   const { itemId } = useParams();
   const [dataName, setDataName] = useState("");
@@ -33,7 +35,10 @@ function Update() {
   const [hasReferences, setHasReferences] = useState(false);
   const navigate = useNavigate();
   const objectClasses = ["Safe", "Euclid", "Keter", "Thaumiel"];
-
+  const [imageUrl, setImageUrl] = useState("");
+  const [image, setImage] = useState(imageUrl);
+  const [percent, setPercent] = useState(0);
+  const [file, setFile] = useState("");
   useEffect(() => {
     // Load data when itemId changes
     const fetchData = async () => {
@@ -57,6 +62,7 @@ function Update() {
           setHasHistory(!!itemData.HistoryText);
           setHasNotes(!!itemData.NotesText);
           setHasReferences(!!itemData.ReferencesText);
+          setImageUrl(itemData.imageUrl);
         } else {
           setDataNumber("");
           setDataName("");
@@ -108,6 +114,7 @@ function Update() {
         HistoryText: hasHistory ? dataHistoryText : null,
         NotesText: hasNotes ? dataNotesText : null,
         ReferencesText: hasReferences ? dataReferencesText : null,
+        imageUrl: imageUrl,
       });
 
       setDataName("");
@@ -122,17 +129,63 @@ function Update() {
       navigate("/");
     }
   };
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
+
+  function handleChange(event) {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(event.target.files[0]);
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        setImage(event.target.result);
+      };
+
+      reader.onerror = (error) => {
+        console.error("Error reading the file:", error);
+      };
+
+      reader.readAsDataURL(selectedFile);
+    } else {
+      setImage(null);
+      // setFile(null);
+    }
+    setFile(selectedFile);
+  }
+  useEffect(() => {
+    setImage(imageUrl);
+  }, [imageUrl]);
+  const handleUpload = () => {
+    if (!file) {
+      alert("Please upload an image first!");
+    }
+
+    const storageRef = ref(storage, `/files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+        );
+
+        setPercent(percent);
+      },
+      (err) => {
+        console.log(err);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((url) => {
+            setImageUrl(url);
+            console.log(url);
+          })
+          .catch((error) => {
+            console.error("Error getting download URL: ", error);
+          });
+      },
+    );
+  };
 
   return (
     <Box
@@ -302,21 +355,41 @@ function Update() {
               onChange={(event) => setDataReferencesText(event.target.value)}
             />
           )}
-          <Button
-            component="label"
-            variant="contained"
-            startIcon={<CloudUploadIcon />}
-            sx={{ mt: 4, mb: 5, textAlign: "center", width: "200px" }}
-          >
-            Upload Image
-            <VisuallyHiddenInput type="file" />
-          </Button>
+          {image && <img src={image} alt="Preview" width="200" />}
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <input
+              type="file"
+              style={{ marginTop: "2rem", marginBottom: "2rem" }}
+              onChange={handleChange}
+              accept="/image/*"
+            />
+            <Button
+              component="label"
+              variant="contained"
+              startIcon={<CloudUploadIcon />}
+              onClick={handleUpload}
+              sx={{ width: { xs: "150px", md: "200px" }, mt: "1rem" }}
+            >
+              Upload Image
+            </Button>
+            <LinearProgress
+              variant="determinate"
+              value={percent}
+              sx={{ mt: 2, width: { xs: "150px", md: "200px" } }}
+            />
+            <p>Image uploading: {percent} % done</p>
+          </Box>
 
           <Button
             variant="contained"
             color="primary"
             type="submit"
-            sx={{ mt: 4, mb: 5, textAlign: "center", width: "200px" }}
+            sx={{
+              mt: 4,
+              mb: 5,
+              textAlign: "center",
+              width: { xs: "150px", md: "200px" },
+            }}
           >
             Update Entry
           </Button>
