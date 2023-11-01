@@ -79,7 +79,9 @@ function Home({ searchQuery }) {
     };
 
     fetchData();
+// eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   let totalItems;
   let currentItems;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
