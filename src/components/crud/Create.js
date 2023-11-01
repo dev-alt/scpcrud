@@ -105,9 +105,11 @@ function CreateEntry() {
   };
 
   function handleChange(event) {
+    const selectedFile = event.target.files[0];
     setFile(event.target.files[0]);
 
-    if (file) {
+    if (selectedFile) {
+      setFile(selectedFile);
       const reader = new FileReader();
 
       reader.onload = (event) => {
@@ -118,7 +120,8 @@ function CreateEntry() {
         console.error("Error reading the file:", error);
       };
 
-      reader.readAsDataURL(file);
+      const blob = new Blob([selectedFile], { type: selectedFile.type });
+      reader.readAsDataURL(blob);
     } else {
       console.warn("No file selected.");
     }
@@ -302,7 +305,7 @@ function CreateEntry() {
                 onChange={handleChange}
                 accept="/image/*"
               />
-              {image && <img src={image} alt="Preview" width="200" />}
+              {image && <img src={image} alt="Preview" width="200px" />}
               <Button
                 component="label"
                 variant="contained"
