@@ -77,10 +77,10 @@ function Header({ setSearchQuery, searchQuery }) {
             onClick={handleClick}
             color="inherit"
           >
-            
+
             <MenuIcon />
           </IconButton>
-          
+
         ) : (
           <Box
             sx={{
@@ -131,9 +131,6 @@ function Header({ setSearchQuery, searchQuery }) {
             horizontal: "left",
           }}
         >
-                      <Button component={Link} to="/create" color="inherit">
-              Add Entry
-            </Button>
           {sortedFiles.map((file) => (
             <MenuItem
               key={file.id}

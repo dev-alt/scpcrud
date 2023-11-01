@@ -8,6 +8,7 @@ import {
   Tooltip,
   Zoom,
   Avatar,
+  Grid
 } from "@mui/material";
 import { db } from "../../utils/DbConfig";
 import { collection, doc, getDoc } from "firebase/firestore";
@@ -79,9 +80,31 @@ function Detail() {
                   </IconButton>
                 </Tooltip>
               </Box>
-              <Typography variant="h3" sx={{ mb: 1 }}>
-                {scpDetails.Number}
-              </Typography>
+              <Grid container spacing={12}>
+                <Grid item>
+                  <Typography variant="h3" sx={{ mb: 1 }}>
+                    {scpDetails.Number}
+                  </Typography>
+                  <Typography variant="h6" sx={{ mb: 2 }}>
+                    {scpDetails.Name}
+                  </Typography>
+                </Grid>
+                <Grid item sx={{ textAlign: "right" }}>
+                  {scpDetails.ObjectClass === 'Safe' && (
+                    <img src="/safe.svg" alt="Safe" style={{ width: '4rem', height: '4rem' }} />
+                  )}
+                  {scpDetails.ObjectClass === 'Euclid' && (
+                    <img src="/euclid.svg" alt="Euclid" style={{ width: '4rem', height: '4rem' }} />
+                  )}
+                  {scpDetails.ObjectClass === 'Keter' && (
+                    <img src="/keter.svg" alt="Keter" style={{ width: '4rem', height: '4rem' }} />
+                  )}
+                  {scpDetails.ObjectClass === 'Thaumiel' && (
+                    <img src="/thaumiel.svg" alt="Thaumiel" style={{ width: '4rem', height: '4rem' }} />
+                  )}
+                </Grid>
+              </Grid>
+
               <Box
                 sx={{
                   display: "flex",
@@ -90,6 +113,7 @@ function Detail() {
                   mb: 2,
                 }}
               >
+
                 <Box
                   sx={{
                     display: "flex",
@@ -98,16 +122,6 @@ function Detail() {
                     mb: 2,
                   }}
                 >
-                  <Typography variant="h6" sx={{ mb: 2 }}>
-                    {scpDetails.Name}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="error"
-                    sx={{ mb: 2, ml: 3, fontWeight: "bold" }}
-                  >
-                    {scpDetails.ObjectClass}
-                  </Typography>
                 </Box>{" "}
                 {scpDetails.imageUrl && (
                   <Avatar
