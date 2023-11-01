@@ -27,21 +27,41 @@ function Delete() {
 
   return (
     <Box>
-      <Box sx={{ mt: 0, textAlign: "center", color: "error.main" }}>
-        <h1>Delete Entry</h1>
-      </Box>
-      <Typography variant="h6">
-        Are you sure you want to delete this entry?
-      </Typography>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleDelete}
-        sx={{ mt: 4, mb: 5, textAlign: "center", width: "200px" }}
+      <Box
+        sx={{
+          mt: "30vh",
+          textAlign: "center",
+          color: "error.main",
+          minHeight: "50vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
-        Delete Entry
-      </Button>
+        <Typography variant="h4">Delete Entry</Typography>
+        <Typography variant="h6" color="secondary" sx={{ mt: "1rem" }}>
+          Confirmation needed
+        </Typography>{" "}
+        <Box>
+          {" "}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleDelete}
+            sx={{ mt: 4, mb: 5, textAlign: "center", width: "200px" }}
+          >
+            Confirm
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            href={`/detail/${itemId}`}
+            sx={{ mt: 4, mb: 5, ml: 5, textAlign: "center", width: "200px" }}
+          >
+            Cancel
+          </Button>
+        </Box>
+      </Box>
     </Box>
   );
 }

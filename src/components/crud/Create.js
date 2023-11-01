@@ -9,10 +9,11 @@ import {
   FormGroup,
   Typography,
   FormControl,
+  LinearProgress,
 } from "@mui/material";
 import { db } from "../../utils/DbConfig";
 import { collection, addDoc } from "firebase/firestore";
-import { styled } from "@mui/material/styles";
+
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../utils/DbConfig";
@@ -36,6 +37,7 @@ function CreateEntry() {
   const dataCollection = collection(db, "data");
   const objectClasses = ["Safe", "Euclid", "Keter", "Thaumiel"];
   const [imageUrl, setImageUrl] = useState("");
+  const [image, setImage] = useState(null);
 
   const handleCreateEntry = async (event) => {
     event.preventDefault();
@@ -102,20 +104,27 @@ function CreateEntry() {
     setSelectedObjectClass(objectClass);
   };
 
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
-
   function handleChange(event) {
+    const selectedFile = event.target.files[0];
     setFile(event.target.files[0]);
+
+    if (selectedFile) {
+      setFile(selectedFile);
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        setImage(event.target.result);
+      };
+
+      reader.onerror = (error) => {
+        console.error("Error reading the file:", error);
+      };
+
+      const blob = new Blob([selectedFile], { type: selectedFile.type });
+      reader.readAsDataURL(blob);
+    } else {
+      console.warn("No file selected.");
+    }
   }
   const handleUpload = () => {
     if (!file) {
@@ -149,6 +158,7 @@ function CreateEntry() {
       },
     );
   };
+
   return (
     <Box
       sx={{
@@ -242,61 +252,76 @@ function CreateEntry() {
           <FormGroup
             sx={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: "colomn",
               justifyContent: "space-between",
             }}
           >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={hasAddendum}
-                  onChange={handleAddendumCheckboxChange}
-                  name="hasAddendum"
-                />
-              }
-              label="Addendum"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={hasHistory}
-                  onChange={handleHistoryCheckboxChange}
-                  name="hasHistory"
-                />
-              }
-              label="History"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={hasNotes}
-                  onChange={handleNotesCheckboxChange}
-                  name="hasNotes"
-                />
-              }
-              label="Notes"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={hasReferences}
-                  onChange={handleReferencesCheckboxChange}
-                  name="hasReferences"
-                />
-              }
-              label="References"
-            />
-            <input type="file" onChange={handleChange} accept="/image/*" />
-            <Button
-              component="label"
-              variant="contained"
-              startIcon={<CloudUploadIcon />}
-              onClick={handleUpload}
-            >
-              Upload Image
-              <VisuallyHiddenInput type="file" />
-            </Button>
-            <p>{percent} % done</p>
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={hasAddendum}
+                    onChange={handleAddendumCheckboxChange}
+                    name="hasAddendum"
+                  />
+                }
+                label="Addendum"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={hasHistory}
+                    onChange={handleHistoryCheckboxChange}
+                    name="hasHistory"
+                  />
+                }
+                label="History"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={hasNotes}
+                    onChange={handleNotesCheckboxChange}
+                    name="hasNotes"
+                  />
+                }
+                label="Notes"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={hasReferences}
+                    onChange={handleReferencesCheckboxChange}
+                    name="hasReferences"
+                  />
+                }
+                label="References"
+              />
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <input
+                type="file"
+                style={{ marginTop: "2rem", marginBottom: "2rem" }}
+                onChange={handleChange}
+                accept="/image/*"
+              />
+              {image && <img src={image} alt="Preview" width="200px" />}
+              <Button
+                component="label"
+                variant="contained"
+                startIcon={<CloudUploadIcon />}
+                onClick={handleUpload}
+                sx={{ width: { xs: "150px", md: "200px" }, mt: "1rem" }}
+              >
+                Upload Image
+              </Button>
+              <LinearProgress
+                variant="determinate"
+                value={percent}
+                sx={{ mt: 2, width: { xs: "150px", md: "200px" } }}
+              />
+              <p>Image uploading: {percent} % done</p>
+            </Box>
           </FormGroup>
 
           {hasAddendum && (
@@ -355,7 +380,12 @@ function CreateEntry() {
             variant="contained"
             color="primary"
             type="submit"
-            sx={{ mt: 4, mb: 5, textAlign: "center", width: "200px" }}
+            sx={{
+              mt: 4,
+              mb: 5,
+              textAlign: "center",
+              width: { xs: "150px", md: "200px" },
+            }}
           >
             Create Entry
           </Button>

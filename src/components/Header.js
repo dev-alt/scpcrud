@@ -13,6 +13,7 @@ import { db } from "../utils/DbConfig";
 import { useEffect, useState, useRef } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import SearchBlock from "./SearchBlock";
+import logo from "../utils/logo.png";
 
 function Header({ setSearchQuery, searchQuery }) {
   const location = useLocation();
@@ -60,6 +61,7 @@ function Header({ setSearchQuery, searchQuery }) {
     }
     return 0;
   });
+  // const isSmallScreen = window.innerWidth <= 768;
 
   return (
     <AppBar
@@ -67,11 +69,7 @@ function Header({ setSearchQuery, searchQuery }) {
       sx={{ boxShadow: "none", bgcolor: "transparent" }}
     >
       <Toolbar sx={{ display: "flex" }}>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/SCP_Foundation_%28emblem%29.svg/640px-SCP_Foundation_%28emblem%29.svg.png"
-          alt="logo"
-          width="30px"
-        />
+        <img src={logo} alt="logo" width="30px" />
         <Box
           sx={{
             display: "flex",

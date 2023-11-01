@@ -7,6 +7,7 @@ import {
   IconButton,
   Tooltip,
   Zoom,
+  Avatar,
 } from "@mui/material";
 import { db } from "../../utils/DbConfig";
 import { collection, doc, getDoc } from "firebase/firestore";
@@ -41,9 +42,10 @@ function Detail() {
         SCP Entry Details
       </Typography>
       <Zoom in timeout={1000}>
-        <Paper elevation={3} sx={{ p: 3, m: 3, position: "relative" }}>
-          <Box sx={{ mt: 0, textAlign: "center", color: "error.main" }}></Box>
-
+        <Paper
+          elevation={3}
+          sx={{ p: 3, mx: { xs: 0, sm: 10 }, position: "relative" }}
+        >
           {scpDetails ? (
             <Box>
               <Box
@@ -60,6 +62,7 @@ function Detail() {
                     variant="text"
                     color="primary"
                     component={Link}
+                    style={{ fontSize: "70px" }}
                     to={`/update/${scpDetails.id}`}
                   >
                     <EditNoteIcon />
@@ -79,30 +82,62 @@ function Detail() {
               <Typography variant="h3" sx={{ mb: 1 }}>
                 {scpDetails.Number}
               </Typography>
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                {scpDetails.Name}
-              </Typography>
-              <Typography variant="caption" sx={{ mb: 2 }}>
-                {scpDetails.ObjectClass}
-              </Typography>
-              {scpDetails.imageUrl && (
-                <img
-                  src={scpDetails.imageUrl}
-                  alt="SCP"
-                  style={{ maxWidth: "100%" }}
-                />
-              )}
-              <Typography variant="h5" sx={{ mb: 3 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  mb: 2,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: { xs: "column", md: "row" },
+                    mb: 2,
+                  }}
+                >
+                  <Typography variant="h6" sx={{ mb: 2 }}>
+                    {scpDetails.Name}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    color="error"
+                    sx={{ mb: 2, ml: 3, fontWeight: "bold" }}
+                  >
+                    {scpDetails.ObjectClass}
+                  </Typography>
+                </Box>{" "}
+                {scpDetails.imageUrl && (
+                  <Avatar
+                    alt="SCP"
+                    src={scpDetails.imageUrl}
+                    sx={{
+                      width: { xs: "150px", sm: "300px" },
+                      height: { xs: "150px", sm: "300px" },
+                    }}
+                  />
+                )}
+              </Box>
+
+              <Typography variant="h5" sx={{ mb: 3, fontWeight: "bold" }}>
                 Special Containment Procedures:{" "}
               </Typography>
               <Typography>{scpDetails.Containment}</Typography>
-              <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>
+              <Typography
+                variant="h5"
+                sx={{ mt: 2, mb: 1, fontWeight: "bold" }}
+              >
                 Description:{" "}
               </Typography>
               <Typography>{scpDetails.Description}</Typography>
               {scpDetails.AddendumText && (
                 <div>
-                  <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{ mt: 2, mb: 1, fontWeight: "bold" }}
+                  >
                     Addendum Text:
                   </Typography>
                   <Typography>{scpDetails.AddendumText}</Typography>
@@ -111,7 +146,10 @@ function Detail() {
 
               {scpDetails.HistoryText && (
                 <div>
-                  <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{ mt: 2, mb: 1, fontWeight: "bold" }}
+                  >
                     History Text:
                   </Typography>
                   <Typography>{scpDetails.HistoryText}</Typography>
@@ -120,7 +158,10 @@ function Detail() {
 
               {scpDetails.NotesText && (
                 <div>
-                  <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{ mt: 2, mb: 1, fontWeight: "bold" }}
+                  >
                     Notes Text:
                   </Typography>
                   <Typography>{scpDetails.NotesText}</Typography>
@@ -129,7 +170,10 @@ function Detail() {
 
               {scpDetails.ReferencesText && (
                 <div>
-                  <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{ mt: 2, mb: 1, fontWeight: "bold" }}
+                  >
                     References Text:
                   </Typography>
                   <Typography>{scpDetails.ReferencesText}</Typography>

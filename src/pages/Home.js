@@ -12,6 +12,7 @@ import {
   Divider,
   Link as MuiLink,
   Fab,
+  Avatar,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { db } from "../utils/DbConfig";
@@ -64,6 +65,7 @@ function Home({ searchQuery }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const theme = useTheme();
+  const [previousPage, setPreviousPage] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,14 +81,11 @@ function Home({ searchQuery }) {
     };
 
     fetchData();
-// eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("data:", data);
   }, []);
 
   let totalItems;
   let currentItems;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const [loading, setLoading] = useState(true);
   const filteredItems = data.filter((item) => {
@@ -100,7 +99,8 @@ function Home({ searchQuery }) {
     }
     // return currentItems;
   });
-
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   if (searchQuery) {
     currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
     totalItems = filteredItems.length;
@@ -108,7 +108,15 @@ function Home({ searchQuery }) {
     currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
     totalItems = data.length;
   }
+  useEffect(() => {
+    if (searchQuery) {
+      setCurrentPage(1);
+      setCurrentPage(previousPage);
+    }
+    setPreviousPage(currentPage);
+  }, [searchQuery]);
 
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
   // Define different maxChars based on screen size
   let maxChars;
   if (theme.breakpoints.values.sm > theme.breakpoints.width) {
@@ -176,8 +184,11 @@ function Home({ searchQuery }) {
                 color="text.primary"
                 sx={{
                   textAlign: "center",
+                  whiteSpace: { xs: "normal", md: "nowrap" },
                   fontWeight: "900",
                   opacity: "60%",
+                  fontSize: { xs: "2rem", sm: "3rem" },
+                  p: 2,
                 }}
               >
                 SCP Foundation
@@ -197,7 +208,7 @@ function Home({ searchQuery }) {
               <CircularProgress color="secondary" />
             </Box>
           ) : (
-            <Grid container sx={{ p: 3, m: 3 }}>
+            <Grid container sx={{ p: 3, my: 3 }}>
               {currentItems.map((item) => (
                 <Grid item xs={12} sm={6} lg={4} key={item.id}>
                   <Zoom in timeout={{ enter: 100 }}>
@@ -213,35 +224,50 @@ function Home({ searchQuery }) {
                         },
                       })}
                     >
-                      <Link
-                        to={`/detail/${item.id}`}
-                        style={{ textDecoration: "none" }}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
                       >
-                        <MuiLink href={`/detail/${item.id}`} underline="none">
-                          <Typography
-                            variant="h6"
-                            sx={{
-                              textDecoration: "none",
-                              "&:link": {
-                                color: "text.secondary",
-                              },
-                              "&:visited": {
-                                color: "red",
-                              },
-                              "&:hover": {
-                                textDecoration: "underline",
-                                color: "green",
-                              },
-                              "&:active": {
-                                color: "primary",
+                        <Link
+                          to={`/detail/${item.id}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <MuiLink href={`/detail/${item.id}`} underline="none">
+                            <Typography
+                              variant="h6"
+                              sx={{
                                 textDecoration: "none",
-                              },
-                            }}
-                          >
-                            {item.Number} {item.Name}
-                          </Typography>
-                        </MuiLink>
-                      </Link>
+                                "&:link": {
+                                  color: "text.secondary",
+                                },
+                                "&:visited": {
+                                  color: "red",
+                                },
+                                "&:hover": {
+                                  textDecoration: "underline",
+                                  color: "green",
+                                },
+                                "&:active": {
+                                  color: "primary",
+                                  textDecoration: "none",
+                                },
+                              }}
+                            >
+                              {item.Number} {item.Name}
+                            </Typography>
+                          </MuiLink>
+                        </Link>
+                        <Avatar
+                          alt="SCP"
+                          src={item.imageUrl}
+                          sx={{
+                            width: "50px",
+                            height: "50px",
+                          }}
+                        />
+                      </Box>
                       <Divider
                         variant="fullwidth"
                         light
