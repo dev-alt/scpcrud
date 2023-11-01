@@ -65,6 +65,7 @@ function Home({ searchQuery }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const theme = useTheme();
+  const [previousPage, setPreviousPage] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,6 +108,14 @@ function Home({ searchQuery }) {
     currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
     totalItems = data.length;
   }
+  useEffect(() => {
+    if (searchQuery) {
+      setCurrentPage(1);
+      setCurrentPage(previousPage);
+    }
+    setPreviousPage(currentPage);
+  }, [searchQuery]);
+
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   // Define different maxChars based on screen size
   let maxChars;
@@ -199,7 +208,7 @@ function Home({ searchQuery }) {
               <CircularProgress color="secondary" />
             </Box>
           ) : (
-            <Grid container sx={{ p: 3, m: 3 }}>
+            <Grid container sx={{ p: 3, my: 3 }}>
               {currentItems.map((item) => (
                 <Grid item xs={12} sm={6} lg={4} key={item.id}>
                   <Zoom in timeout={{ enter: 100 }}>
