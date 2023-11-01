@@ -69,7 +69,8 @@ function Header({ setSearchQuery, searchQuery }) {
     <AppBar position="static" sx={{ boxShadow: "none", bgcolor: "transparent" }}>
       <Toolbar sx={{ display: "flex" }}>
         <Link to="/">
-          <img src={logo} alt="logo" width="30px" />
+          <img src={logo} alt="logo" width="40px" 
+              style={{ marginTop: "0.5rem" }} />
         </Link>
         {isSmallScreen ? (
           <IconButton

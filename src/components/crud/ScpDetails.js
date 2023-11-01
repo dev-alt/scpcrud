@@ -45,7 +45,7 @@ function Detail() {
       <Zoom in timeout={1000}>
         <Paper
           elevation={3}
-          sx={{ p: 3, mx: { xs: 0, sm: 10 }, position: "relative" }}
+          sx={{ p: 3, mx: { xs: 0, sm: 10, xl: 25 }, position: "relative" }}
         >
           {scpDetails ? (
             <Box>
@@ -89,18 +89,18 @@ function Detail() {
                     {scpDetails.Name}
                   </Typography>
                 </Grid>
-                <Grid item sx={{ textAlign: "right" }}>
+                <Grid item sx={{ textAlign: { xs: "right", sm: "left" } }}>
                   {scpDetails.ObjectClass === 'Safe' && (
-                    <img src="/safe.svg" alt="Safe" style={{ width: '4rem', height: '4rem' }} />
+                    <img src="/safe.svg" alt="Safe" style={{ width: '6rem', height: '6rem' }} />
                   )}
                   {scpDetails.ObjectClass === 'Euclid' && (
-                    <img src="/euclid.svg" alt="Euclid" style={{ width: '4rem', height: '4rem' }} />
+                    <img src="/euclid.svg" alt="Euclid" style={{ width: '6rem', height: '6rem' }} />
                   )}
                   {scpDetails.ObjectClass === 'Keter' && (
-                    <img src="/keter.svg" alt="Keter" style={{ width: '4rem', height: '4rem' }} />
+                    <img src="/keter.svg" alt="Keter" style={{ width: '6rem', height: '6rem' }} />
                   )}
                   {scpDetails.ObjectClass === 'Thaumiel' && (
-                    <img src="/thaumiel.svg" alt="Thaumiel" style={{ width: '4rem', height: '4rem' }} />
+                    <img src="/thaumiel.svg" alt="Thaumiel" style={{ width: '6rem', height: '6rem' }} />
                   )}
                 </Grid>
               </Grid>
