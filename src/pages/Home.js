@@ -114,6 +114,7 @@ function Home({ searchQuery }) {
       setCurrentPage(previousPage);
     }
     setPreviousPage(currentPage);
+// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
