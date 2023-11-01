@@ -81,7 +81,7 @@ function Home({ searchQuery }) {
     };
 
     fetchData();
-// eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let totalItems;
@@ -114,7 +114,7 @@ function Home({ searchQuery }) {
       setCurrentPage(previousPage);
     }
     setPreviousPage(currentPage);
-// eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -319,6 +319,7 @@ function Home({ searchQuery }) {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              mb: 4
             }}
           >
             <IconButton
@@ -327,7 +328,7 @@ function Home({ searchQuery }) {
               aria-label="Previous Page"
               aria-disabled={currentPage === 1}
             >
-              <ChevronLeftIcon color="secondary" />
+              <ChevronLeftIcon color="secondary" sx={{ fontSize: 40 }} />
             </IconButton>
             <IconButton
               onClick={() => handlePageChange(currentPage + 1)}
@@ -335,7 +336,7 @@ function Home({ searchQuery }) {
               aria-label="Next Page"
               aria-disabled={indexOfLastItem >= data.length}
             >
-              <ChevronRightIcon color="secondary" />
+              <ChevronRightIcon color="secondary" sx={{ fontSize: 40 }} />
             </IconButton>
           </Box>
         </Box>
