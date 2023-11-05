@@ -231,35 +231,35 @@ function Home({ searchQuery }) {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Link
+                        <MuiLink
                           to={`/detail/${item.id}`}
-                          style={{ textDecoration: "none" }}
+                          underline="none"
+                          component={Link}
                         >
-                          <MuiLink href={`/detail/${item.id}`} underline="none">
-                            <Typography
-                              variant="h6"
-                              sx={{
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              textDecoration: "none",
+                              "&:link": {
+                                color: "text.secondary",
+                              },
+                              "&:visited": {
+                                color: "red",
+                              },
+                              "&:hover": {
+                                textDecoration: "underline",
+                                color: "green",
+                              },
+                              "&:active": {
+                                color: "primary",
                                 textDecoration: "none",
-                                "&:link": {
-                                  color: "text.secondary",
-                                },
-                                "&:visited": {
-                                  color: "red",
-                                },
-                                "&:hover": {
-                                  textDecoration: "underline",
-                                  color: "green",
-                                },
-                                "&:active": {
-                                  color: "primary",
-                                  textDecoration: "none",
-                                },
-                              }}
-                            >
-                              {item.Number} {item.Name}
-                            </Typography>
-                          </MuiLink>
-                        </Link>
+                              },
+                            }}
+                          >
+                            {item.Number} {item.Name}
+                          </Typography>
+                        </MuiLink>
+
                         <Avatar
                           alt="SCP"
                           src={item.imageUrl}
@@ -319,7 +319,7 @@ function Home({ searchQuery }) {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              mb: 4
+              mb: 4,
             }}
           >
             <IconButton

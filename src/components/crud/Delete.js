@@ -8,8 +8,6 @@ function Delete() {
   const { itemId } = useParams();
   const history = useNavigate();
 
-  console.log(itemId);
-
   const handleDelete = async () => {
     try {
       const OurCollection = collection(db, "data");

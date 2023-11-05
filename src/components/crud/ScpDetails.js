@@ -8,7 +8,7 @@ import {
   Tooltip,
   Zoom,
   Avatar,
-  Grid
+  Grid,
 } from "@mui/material";
 import { db } from "../../utils/DbConfig";
 import { collection, doc, getDoc } from "firebase/firestore";
@@ -34,8 +34,6 @@ function Detail() {
     };
     fetchData();
   }, [itemId]);
-
-  console.log(scpDetails);
 
   return (
     <Box>
@@ -90,17 +88,33 @@ function Detail() {
                   </Typography>
                 </Grid>
                 <Grid item sx={{ textAlign: { xs: "right", sm: "left" } }}>
-                  {scpDetails.ObjectClass === 'Safe' && (
-                    <img src="/safe.svg" alt="Safe" style={{ width: '6rem', height: '6rem' }} />
+                  {scpDetails.ObjectClass === "Safe" && (
+                    <img
+                      src="/safe.svg"
+                      alt="Safe"
+                      style={{ width: "6rem", height: "6rem" }}
+                    />
                   )}
-                  {scpDetails.ObjectClass === 'Euclid' && (
-                    <img src="/euclid.svg" alt="Euclid" style={{ width: '6rem', height: '6rem' }} />
+                  {scpDetails.ObjectClass === "Euclid" && (
+                    <img
+                      src="/euclid.svg"
+                      alt="Euclid"
+                      style={{ width: "6rem", height: "6rem" }}
+                    />
                   )}
-                  {scpDetails.ObjectClass === 'Keter' && (
-                    <img src="/keter.svg" alt="Keter" style={{ width: '6rem', height: '6rem' }} />
+                  {scpDetails.ObjectClass === "Keter" && (
+                    <img
+                      src="/keter.svg"
+                      alt="Keter"
+                      style={{ width: "6rem", height: "6rem" }}
+                    />
                   )}
-                  {scpDetails.ObjectClass === 'Thaumiel' && (
-                    <img src="/thaumiel.svg" alt="Thaumiel" style={{ width: '6rem', height: '6rem' }} />
+                  {scpDetails.ObjectClass === "Thaumiel" && (
+                    <img
+                      src="/thaumiel.svg"
+                      alt="Thaumiel"
+                      style={{ width: "6rem", height: "6rem" }}
+                    />
                   )}
                 </Grid>
               </Grid>
@@ -113,7 +127,6 @@ function Detail() {
                   mb: 2,
                 }}
               >
-
                 <Box
                   sx={{
                     display: "flex",
@@ -121,8 +134,7 @@ function Detail() {
                     flexDirection: { xs: "column", md: "row" },
                     mb: 2,
                   }}
-                >
-                </Box>{" "}
+                ></Box>{" "}
                 {scpDetails.imageUrl && (
                   <Avatar
                     alt="SCP"

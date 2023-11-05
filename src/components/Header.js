@@ -29,12 +29,10 @@ function Header({ setSearchQuery, searchQuery }) {
     const fetchData = async () => {
       const OurCollection = collection(db, "data");
       const snapshot = await getDocs(OurCollection);
-      console.log(snapshot);
       const items = [];
       snapshot.forEach((doc) => {
         items.push({ id: doc.id, ...doc.data() });
       });
-      console.log(items);
       setFiles(items);
     };
 
@@ -66,22 +64,23 @@ function Header({ setSearchQuery, searchQuery }) {
   });
 
   return (
-    <AppBar position="static" sx={{ boxShadow: "none", bgcolor: "transparent" }}>
+    <AppBar
+      position="static"
+      sx={{ boxShadow: "none", bgcolor: "transparent" }}
+    >
       <Toolbar sx={{ display: "flex" }}>
         <Link to="/">
-          <img src={logo} alt="logo" width="40px" 
-              style={{ marginTop: "0.5rem" }} />
+          <img
+            src={logo}
+            alt="logo"
+            width="40px"
+            style={{ marginTop: "0.5rem" }}
+          />
         </Link>
         {isSmallScreen ? (
-          <IconButton
-            sx={{ ml: "auto" }}
-            onClick={handleClick}
-            color="inherit"
-          >
-
+          <IconButton sx={{ ml: "auto" }} onClick={handleClick} color="inherit">
             <MenuIcon />
           </IconButton>
-
         ) : (
           <Box
             sx={{
