@@ -78,7 +78,7 @@ function Detail() {
                   </IconButton>
                 </Tooltip>
               </Box>
-              <Grid container spacing={12}>
+              <Grid container>
                 <Grid item>
                   <Typography variant="h3" sx={{ mb: 1 }}>
                     {scpDetails.Number}
