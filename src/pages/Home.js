@@ -199,11 +199,14 @@ function Home({ searchQuery }) {
           {loading ? (
             <Box
               width="100vw"
-              height="60vw"
+              height="60vh"
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                // position: "fixed",
+                // left: "50vw",
+                // bottom: "60vh",
               }}
             >
               <CircularProgress color="secondary" />

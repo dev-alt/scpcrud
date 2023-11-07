@@ -4,7 +4,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 const SearchBlock = ({ setSearchQuery, searchQuery }) => {
   return (
-    <Box sx={{ width: "200px", bgcolor: "secondary" }}>
+    <Box sx={{ width: "200px", bgcolor: "secondary", ml: "20px" }}>
       <TextField
         variant="outlined"
         placeholder="Search an entry"

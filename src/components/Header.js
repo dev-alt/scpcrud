@@ -9,6 +9,7 @@ import {
   MenuItem,
   IconButton,
   useMediaQuery,
+  Tooltip,
 } from "@mui/material";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../utils/DbConfig";
@@ -76,7 +77,13 @@ function Header({ setSearchQuery, searchQuery }) {
             width="40px"
             style={{ marginTop: "0.5rem" }}
           />
-        </Link>
+        </Link>{" "}
+        {isHomePage && isSmallScreen && (
+          <SearchBlock
+            setSearchQuery={setSearchQuery}
+            searchQuery={searchQuery}
+          />
+        )}
         {isSmallScreen ? (
           <IconButton sx={{ ml: "auto" }} onClick={handleClick} color="inherit">
             <MenuIcon />
@@ -105,32 +112,48 @@ function Header({ setSearchQuery, searchQuery }) {
               >
                 Files
               </Button>
+
               <Button component={Link} to="/create" color="inherit">
                 Add Entry
               </Button>
             </Box>
-            {isHomePage && (
-              <SearchBlock
-                setSearchQuery={setSearchQuery}
-                searchQuery={searchQuery}
-              />
-            )}
           </Box>
+        )}
+        {isHomePage && !isSmallScreen && (
+          <SearchBlock
+            setSearchQuery={setSearchQuery}
+            searchQuery={searchQuery}
+          />
         )}
         <Menu
           id="file-menu"
           anchorEl={anchorRef.current}
+          sx={{ mt: "30px" }}
           open={open}
           onClose={handleClose}
           anchorOrigin={{
-            vertical: "bottom",
+            vertical: "top",
             horizontal: "right",
           }}
           transformOrigin={{
             vertical: "top",
-            horizontal: "left",
+            horizontal: "right",
           }}
+          keepMounted
         >
+          {isSmallScreen && (
+            <Tooltip title="Create Entry">
+              <IconButton
+                sx={{ ml: 3 }}
+                component={Link}
+                to="/create"
+                color="inherit"
+                onClick={handleClose}
+              >
+                <AddIcon />
+              </IconButton>{" "}
+            </Tooltip>
+          )}
           {sortedFiles.map((file) => (
             <MenuItem
               key={file.id}
@@ -138,19 +161,10 @@ function Header({ setSearchQuery, searchQuery }) {
               component={Link}
               to={`/detail/${file.id}`}
             >
-              {file.Number}
+              {file.Name}
             </MenuItem>
           ))}
-          <IconButton
-            sx={{ ml: 3 }}
-            component={Link}
-            to="/create"
-            color="inherit"
-            onClick={handleClose}
-          >
-            <AddIcon />
-          </IconButton>
-        </Menu>
+        </Menu>{" "}
       </Toolbar>
     </AppBar>
   );
