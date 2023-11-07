@@ -80,43 +80,65 @@ function Detail() {
               </Box>
               <Grid container>
                 <Grid item>
-                  <Typography variant="h3" sx={{ mb: 1 }}>
-                    {scpDetails.Number}
-                  </Typography>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="h3" sx={{ mb: 1 }}>
+                      {scpDetails.Number}
+                    </Typography>
+                    <Box>
+                      {scpDetails.ObjectClass === "Safe" && (
+                        <img
+                          src="/safe.svg"
+                          alt="Safe"
+                          style={{
+                            width: "3rem",
+                            height: "3rem",
+                            marginLeft: "1rem",
+                          }}
+                        />
+                      )}
+                      {scpDetails.ObjectClass === "Euclid" && (
+                        <img
+                          src="/euclid.svg"
+                          alt="Euclid"
+                          style={{
+                            width: "3rem",
+                            height: "3rem",
+                            marginLeft: "1rem",
+                          }}
+                        />
+                      )}
+                      {scpDetails.ObjectClass === "Keter" && (
+                        <img
+                          src="/keter.svg"
+                          alt="Keter"
+                          style={{
+                            width: "3rem",
+                            height: "3rem",
+                            marginLeft: "1rem",
+                          }}
+                        />
+                      )}
+                      {scpDetails.ObjectClass === "Thaumiel" && (
+                        <img
+                          src="/thaumiel.svg"
+                          alt="Thaumiel"
+                          style={{
+                            width: "3rem",
+                            height: "3rem",
+                            marginLeft: "1rem",
+                          }}
+                        />
+                      )}
+                    </Box>
+                  </Box>
                   <Typography variant="h6" sx={{ mb: 2 }}>
                     {scpDetails.Name}
                   </Typography>
                 </Grid>
-                <Grid item sx={{ textAlign: { xs: "right", sm: "left" } }}>
-                  {scpDetails.ObjectClass === "Safe" && (
-                    <img
-                      src="/safe.svg"
-                      alt="Safe"
-                      style={{ width: "6rem", height: "6rem" }}
-                    />
-                  )}
-                  {scpDetails.ObjectClass === "Euclid" && (
-                    <img
-                      src="/euclid.svg"
-                      alt="Euclid"
-                      style={{ width: "6rem", height: "6rem" }}
-                    />
-                  )}
-                  {scpDetails.ObjectClass === "Keter" && (
-                    <img
-                      src="/keter.svg"
-                      alt="Keter"
-                      style={{ width: "6rem", height: "6rem" }}
-                    />
-                  )}
-                  {scpDetails.ObjectClass === "Thaumiel" && (
-                    <img
-                      src="/thaumiel.svg"
-                      alt="Thaumiel"
-                      style={{ width: "6rem", height: "6rem" }}
-                    />
-                  )}
-                </Grid>
+                <Grid
+                  item
+                  sx={{ textAlign: { xs: "right", sm: "left" } }}
+                ></Grid>
               </Grid>
 
               <Box

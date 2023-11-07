@@ -8,6 +8,7 @@ const Footer = () => {
     color: "white",
     fontSize: "1rem",
     paddingBottom: "20px",
+    marginTop: "20px",
   };
 
   return <div style={style}>CopyRight © {date.getFullYear()}</div>;
