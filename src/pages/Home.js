@@ -186,10 +186,11 @@ function Home({ searchQuery }) {
                 sx={{
                   textAlign: "center",
                   whiteSpace: { xs: "normal", md: "nowrap" },
-                  fontWeight: "900",
+
                   opacity: "60%",
-                  fontSize: { xs: "2rem", sm: "3rem" },
+                  fontSize: { xs: "3rem", sm: "5rem" },
                   p: 2,
+                  fontFamily: "Space Grotesk",
                 }}
               >
                 SCP Foundation

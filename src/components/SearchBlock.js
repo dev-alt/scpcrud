@@ -23,11 +23,13 @@ const SearchBlock = ({ setSearchQuery, searchQuery }) => {
           sx: {
             "::placeholder": {
               color: "#ffffff",
+              fontSize: "0.1rem",
             },
 
             bgcolor: "secondary",
             borderRadius: "50px",
             color: "#ffffff",
+            fontSize: { xs: "0.7rem", sm: "1rem" },
           },
         }}
       />
