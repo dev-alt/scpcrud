@@ -166,7 +166,7 @@ function CreateEntry() {
         margin: "0 auto",
         marginTop: "25px",
         background: "#f0f0f0",
-        padding: "20px",
+        padding: "1rem",
         borderRadius: "8px",
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
       }}

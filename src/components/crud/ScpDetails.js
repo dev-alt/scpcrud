@@ -43,7 +43,7 @@ function Detail() {
       <Zoom in timeout={1000}>
         <Paper
           elevation={3}
-          sx={{ p: 3, mx: { xs: 0, sm: 10, xl: 25 }, position: "relative" }}
+          sx={{ p: 3, mx: { xs: 2, sm: 10, xl: 25 }, position: "relative" }}
         >
           {scpDetails ? (
             <Box>
@@ -81,7 +81,13 @@ function Detail() {
               <Grid container>
                 <Grid item>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="h3" sx={{ mb: 1 }}>
+                    <Typography
+                      variant="h3"
+                      sx={{
+                        mb: 1,
+                        fontSize: { xs: "2rem", sm: "2rem", md: "3rem" },
+                      }}
+                    >
                       {scpDetails.Number}
                     </Typography>
                     <Box>
